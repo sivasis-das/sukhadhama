@@ -25,7 +25,7 @@ function Header() {
           } `}
         ></div>
         <div
-          className={`absolute bg-white left-0 top-0 bottom-0 w-1/2 h-full ${
+          className={`absolute bg-white left-0 top-0 bottom-0 h-full ${
             showNav
               ? "translate-x-0 ease-in-out duration-500 "
               : "-translate-x-full ease-in-out duration-500"
@@ -33,7 +33,7 @@ function Header() {
         >
           <div className="flex items-center">
             <Link to="/" className="p-5">
-              <h1 className=" font-bold text-2xl flex flex-wrap">
+              <h1 className=" font-bold text-xl flex">
                 <span className="text-orange-600">Sukha</span>
                 <span className="text-slate-800">Dhama</span>
               </h1>
