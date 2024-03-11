@@ -1,11 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
+  const [formData, setFormData] = useState({});
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.success === false) {
+        setLoading(false);
+        setError(data.message);
+        return;
+      }
+      setLoading(false);
+      setError(null)
+      console.log(data);
+      navigate('/sign-in')
+    } catch (error) {
+      setLoading(false);
+      setError(error.message)
+    }
+  };
+
   return (
     <>
-      <div className="bg-gray-200 w-full min-h-screen py-5 flex items-center justify-center overflow-y-hidden">
+      <div className="bg-gray-200 w-full min-h-screen  flex items-center justify-center overflow-y-hidden">
         <div className="w-11/12 xl:w-4/12 bg-white rounded-xl border-black border-2">
           <div className="w-11/12 m-auto">
             <div className="flex items-center justify-between mb-2 py-4">
@@ -20,19 +57,26 @@ function SignUp() {
             </div>
 
             <div>
-              <form action="" method="post" className="flex flex-col ">
+              <form
+                action=""
+                method="post"
+                className="flex flex-col "
+                onSubmit={handleSubmit}
+              >
                 <input
                   type="text"
                   name="username"
                   id="username"
                   required
                   placeholder="Username"
+                  onChange={handleChange}
                   className="p-3 border-zinc-300 border-2 rounded-lg placeholder:text-xl text-xl mb-4 transition ease-in duration-300 outline-none focus:ring-2 focus:ring-orange-600"
                 />
                 <input
                   type="text"
                   name="email"
                   id="email"
+                  onChange={handleChange}
                   required
                   className="p-3 border-zinc-300 border-2 rounded-lg placeholder:text-xl text-xl mb-4 transition ease-in duration-300 outline-none focus:ring-2 focus:ring-orange-600"
                   placeholder="Enter your email"
@@ -41,12 +85,17 @@ function SignUp() {
                   type="password"
                   name="password"
                   id="password"
+                  onChange={handleChange}
                   required
                   placeholder="Enter your password"
                   className="p-3 border-zinc-300 border-2 rounded-lg placeholder:text-xl text-xl mb-4  transition ease-in duration-300 outline-none focus:ring-2 focus:ring-orange-600"
                 />
-                <button className="p-3 bg-orange-600 text-white text-xl rounded-lg hover:bg-orange-700 active:bg-orange-900 transition ease-in-out duration-300">
-                  Sign Up
+                {error&& <p className="text-red-500 mt-5">{error}</p>}
+                <button
+                  disabled={loading}
+                  className="p-3 bg-orange-600 text-white text-xl rounded-lg hover:bg-orange-700 active:bg-orange-900 transition ease-in-out duration-300"
+                >
+                  {loading ? "Loading..." : "Sign Up"}
                 </button>
               </form>
             </div>
