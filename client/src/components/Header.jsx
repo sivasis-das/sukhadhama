@@ -7,10 +7,8 @@ import { RxCross1 } from "react-icons/rx";
 function Header() {
   const [showNav, setShowNav] = useState(false);
 
-  
-
   return (
-    <header className=" shadow-md  ">
+    <header className="shadow-md   ">
       <div className="w-11/12 mx-auto flex justify-between items-center">
         {/* mobile-nav-bar */}
         <div className="xl:hidden py-4">
@@ -20,18 +18,18 @@ function Header() {
         <div
           className={`${
             showNav
-              ? "absolute left-0 right-0 top-0 bottom-0 bg-gray-700 bg-opacity-80 ease-in-out duration-500"
+              ? "absolute  left-0 right-0 top-0 bottom-0 bg-gray-700 bg-opacity-80 ease-in-out duration-500"
               : "hidden"
           } `}
         ></div>
         <div
-          className={`absolute bg-white left-0 top-0 bottom-0 h-full ${
+          className={`absolute bg-white  left-0 top-0 bottom-0 h-full  ${
             showNav
-              ? "translate-x-0 ease-in-out duration-500 "
+              ? "translate-x-0 ease-in-out duration-500"
               : "-translate-x-full ease-in-out duration-500"
           }`}
         >
-          <div className="flex items-center">
+          <div className="flex items-center bg-white">
             <Link to="/" className="p-5">
               <h1 className=" font-bold text-xl flex">
                 <span className="text-orange-600">Sukha</span>
