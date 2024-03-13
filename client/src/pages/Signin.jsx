@@ -1,12 +1,18 @@
-import React, { useState } from 'react'
-import { RxCross1 } from 'react-icons/rx';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { RxCross1 } from "react-icons/rx";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../redux/user/userSlice";
 
 function Signin() {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -14,7 +20,7 @@ function Signin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
+      dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -25,17 +31,15 @@ function Signin() {
       const data = await res.json();
       console.log(data);
       if (data.success === false) {
-        setLoading(false);
-        setError(data.message);
+        dispatch(signInFailure(data.message));
         return;
       }
-      setLoading(false);
-      setError(null);
+      dispatch(signInSuccess(data));
       console.log(data);
       navigate("/");
     } catch (error) {
-      setLoading(false);
-      setError(error.message);
+      console.log(error);
+      dispatch(signInFailure(error.message));
     }
   };
   return (
@@ -44,9 +48,7 @@ function Signin() {
         <div className="w-11/12 xl:w-4/12 bg-white rounded-xl border-black border-2">
           <div className="w-11/12 m-auto">
             <div className="flex items-center justify-between mb-2 py-4">
-              <h3 className="text-2xl font-semibold">
-                Log in to your account
-              </h3>
+              <h3 className="text-2xl font-semibold">Log in to your account</h3>
               <p>
                 <Link to="/">
                   <RxCross1 size={30} />
@@ -55,14 +57,15 @@ function Signin() {
             </div>
 
             <div>
-            {error && <p className="text-red-500 mb-3 font-semibold">{error}</p>}
+              {error && (
+                <p className="text-red-500 mb-3 font-semibold">{error}</p>
+              )}
               <form
                 action=""
                 method="post"
                 className="flex flex-col "
                 onSubmit={handleSubmit}
               >
-                
                 <input
                   type="text"
                   name="email"
@@ -81,7 +84,7 @@ function Signin() {
                   placeholder="Enter your password"
                   className="p-3 border-zinc-300 border-2 rounded-lg placeholder:text-xl text-xl mb-4  transition ease-in duration-300 outline-none focus:ring-2 focus:ring-orange-600"
                 />
-                
+
                 <button
                   disabled={loading}
                   className="p-3 bg-orange-600 text-white text-xl rounded-lg hover:bg-orange-700 active:bg-orange-900 transition ease-in-out duration-300"
@@ -108,7 +111,7 @@ function Signin() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default Signin
+export default Signin;
