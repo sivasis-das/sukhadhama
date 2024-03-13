@@ -7,6 +7,7 @@ import {
   signInStart,
   signInSuccess,
 } from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 
 function Signin() {
   const [formData, setFormData] = useState({});
@@ -87,10 +88,11 @@ function Signin() {
 
                 <button
                   disabled={loading}
-                  className="p-3 bg-orange-600 text-white text-xl rounded-lg hover:bg-orange-700 active:bg-orange-900 transition ease-in-out duration-300"
+                  className="p-3 bg-orange-600 text-white text-xl rounded-lg hover:bg-orange-700 active:bg-orange-900 transition ease-in-out duration-300 mb-3"
                 >
                   {loading ? "Loading..." : "Sign In"}
                 </button>
+                <OAuth/>
               </form>
             </div>
             <div className="flex before:border-t before:border-gray-900 before:flex-1 after:border-t after:border-gray-900 after:flex-1 items-center  my-2">

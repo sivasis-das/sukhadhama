@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
+import OAuth from "../components/OAuth";
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -56,7 +57,7 @@ function SignUp() {
             </div>
 
             <div>
-            {error && <p className="text-red-500 mt-5">{error}</p>}
+              {error && <p className="text-red-500 mt-5">{error}</p>}
               <form
                 action=""
                 method="post"
@@ -90,13 +91,14 @@ function SignUp() {
                   placeholder="Enter your password"
                   className="p-3 border-zinc-300 border-2 rounded-lg placeholder:text-xl text-xl mb-4  transition ease-in duration-300 outline-none focus:ring-2 focus:ring-orange-600"
                 />
-                
+
                 <button
                   disabled={loading}
-                  className="p-3 bg-orange-600 text-white text-xl rounded-lg hover:bg-orange-700 active:bg-orange-900 transition ease-in-out duration-300"
+                  className="p-3 bg-orange-600 text-white text-xl rounded-lg hover:bg-orange-700 active:bg-orange-900 transition ease-in-out duration-300 mb-3"
                 >
                   {loading ? "Loading..." : "Sign Up"}
                 </button>
+                <OAuth />
               </form>
             </div>
             <div className="flex before:border-t before:border-gray-900 before:flex-1 after:border-t after:border-gray-900 after:flex-1 items-center  my-2">
