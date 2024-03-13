@@ -8,7 +8,6 @@ function SignUp() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -31,18 +30,18 @@ function SignUp() {
         return;
       }
       setLoading(false);
-      setError(null)
+      setError(null);
       console.log(data);
-      navigate('/sign-in')
+      navigate("/sign-in");
     } catch (error) {
       setLoading(false);
-      setError(error.message)
+      setError(error.message);
     }
   };
 
   return (
     <>
-      <div className="bg-gray-200 w-full min-h-screen  flex items-center justify-center overflow-y-hidden">
+      <div className=" bg-gray-200 w-full min-h-screen  flex items-center justify-center absolute top-0 bottom-0 left-0 right-0 -z-10">
         <div className="w-11/12 xl:w-4/12 bg-white rounded-xl border-black border-2">
           <div className="w-11/12 m-auto">
             <div className="flex items-center justify-between mb-2 py-4">
@@ -57,6 +56,7 @@ function SignUp() {
             </div>
 
             <div>
+            {error && <p className="text-red-500 mt-5">{error}</p>}
               <form
                 action=""
                 method="post"
@@ -90,7 +90,7 @@ function SignUp() {
                   placeholder="Enter your password"
                   className="p-3 border-zinc-300 border-2 rounded-lg placeholder:text-xl text-xl mb-4  transition ease-in duration-300 outline-none focus:ring-2 focus:ring-orange-600"
                 />
-                {error&& <p className="text-red-500 mt-5">{error}</p>}
+                
                 <button
                   disabled={loading}
                   className="p-3 bg-orange-600 text-white text-xl rounded-lg hover:bg-orange-700 active:bg-orange-900 transition ease-in-out duration-300"
