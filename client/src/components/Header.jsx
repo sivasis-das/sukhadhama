@@ -9,7 +9,7 @@ function Header() {
   const [showNav, setShowNav] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
   return (
-    <header className="shadow-md  bg-white ">
+    <header className="shadow-md  bg-white">
       <div className="w-11/12 mx-auto flex justify-between items-center">
         {/* mobile-nav-bar */}
         <div className="xl:hidden py-4">
