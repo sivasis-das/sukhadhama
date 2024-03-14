@@ -3,10 +3,11 @@ import { Link, NavLink } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { FaCircleUser } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
+import { useSelector } from "react-redux";
 
 function Header() {
   const [showNav, setShowNav] = useState(false);
-
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <header className="shadow-md  bg-white ">
       <div className="w-11/12 mx-auto flex justify-between items-center">
@@ -176,32 +177,53 @@ function Header() {
             <p>Advertise</p>
           </div>
         </div>
-        <div className="hidden xl:flex space-x-3 items-center">
-          <p>
-            <NavLink
-              to="/sign-in"
-              className={({ isActive }) =>
-                `${
-                  isActive && "border-b-2 border-black"
-                } hover:border-b-2 hover:border-black py-3`
-              }
-            >
-              Log In
-            </NavLink>
-          </p>
-          <p>
-            <Link
-              to="sign-up"
-              className="px-6 py-1 text-md bg-black text-white font-semibold rounded-full "
-            >
-              Sign Up
-            </Link>
-          </p>
-        </div>
+        {currentUser ? (
+          <Link to="/profile" className="hidden xl:block">
+            <img
+              className="rounded-full size-10"
+              src={currentUser.avatar}
+              alt="profile photo"
+            />
+          </Link>
+        ) : (
+          <div className="hidden xl:flex space-x-3 items-center">
+            <p>
+              <NavLink
+                to="/sign-in"
+                className={({ isActive }) =>
+                  `${
+                    isActive && "border-b-2 border-black"
+                  } hover:border-b-2 hover:border-black py-3`
+                }
+              >
+                Log In
+              </NavLink>
+            </p>
+            <p>
+              <Link
+                to="sign-up"
+                className="px-6 py-1 text-md bg-black text-white font-semibold rounded-full "
+              >
+                Sign Up
+              </Link>
+            </p>
+          </div>
+        )}
+
         <div className="xl:hidden">
-          <NavLink to="/sign-in">
-            <FaCircleUser size={35} />
-          </NavLink>
+          {currentUser ? (
+            <Link to="/profile">
+              <img
+                className="rounded-full size-10"
+                src={currentUser.avatar}
+                alt="profile photo"
+              />
+            </Link>
+          ) : (
+            <Link to="/sign-in">
+              <FaCircleUser size={35} />
+            </Link>
+          )}
         </div>
       </div>
     </header>
