@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MdOutlineAddAPhoto } from "react-icons/md";
 import { app } from "../firebase";
 import {
@@ -8,12 +8,19 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
+} from "../redux/user/userSlice";
 function Profile() {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser,loading,error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const [showEdit, setShowEdit] = useState(false);
   const [file, setFile] = useState(undefined);
   const [fileProgressPerc, setFileProgressPerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
+  const [updateSuccessfull, setUpdateSuccessfull] = useState(false);
   const [formData, setFormData] = useState({});
 
   const fileRef = useRef(null);
@@ -52,14 +59,37 @@ function Profile() {
       }
     );
   };
-  // console.log(formData);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
 
-  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(updateUserStart())
+      const res = await fetch(`/api/user/update/${_id}`,{
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+      const data = await res.json();
+      if (data.success===false) {
+        dispatch(updateUserFailure(data.message))
+        return;
+      }
+      dispatch(updateUserSuccess(data));
+      setUpdateSuccessfull(true);
+    } catch (error) {
+      dispatch(updateUserFailure(error.message));
+    }
+  };
 
   return (
-    <div className="absolute  top-0 bottom-0 left-0 right-0  -z-10 flex items-center justify-center">
-      {/* main-card */}
-      <div className="w-11/12  h-5/6 mt-9 rounded flex flex-col xl:flex-row overflow-y-scroll scrollbar">
+    <div className="absolute  top-14 bottom-0 left-0 right-0  -z-10 flex items-center justify-center">
+      {/* main-card  */}
+      <div className="w-full h-full  flex flex-col xl:flex-row overflow-y-scroll scrollbar">
         {/* profile section */}
         <div className="xl:w-3/12 xl:sticky xl:top-0 px-2">
           {/* photo + buttons */}
@@ -122,7 +152,7 @@ function Profile() {
           {showEdit && (
             <form
               action=""
-              
+              onSubmit={handleSubmit}
               className="mt-3 flex flex-col gap-3"
             >
               <input
@@ -143,7 +173,8 @@ function Profile() {
                   type="text"
                   id="username"
                   placeholder="Username"
-                  value={username}
+                  defaultValue={username}
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex flex-col">
@@ -155,7 +186,8 @@ function Profile() {
                   type="email"
                   id="email"
                   placeholder="Email"
-                  value={email}
+                  defaultValue={email}
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex flex-col">
@@ -171,8 +203,8 @@ function Profile() {
               </div>
 
               <div className="space-x-2">
-                <button className="bg-orange-600 rounded-md text-white px-3">
-                  Save
+                <button disabled={loading} className="bg-orange-600 rounded-md text-white px-3">
+                  {loading?"Loading...":"Save"}
                 </button>
                 <button
                   type="button"
@@ -182,6 +214,8 @@ function Profile() {
                   Cancel
                 </button>
               </div>
+              {error?<p className="text-red-600 font-semibold">{error}</p>:null}
+              {updateSuccessfull?<p className="text-green-700 font-semibold">Profile Updated Successfully !</p>:null}
             </form>
           )}
           <div className="absolute bottom-2 flex">
@@ -193,7 +227,7 @@ function Profile() {
             </button>
           </div>
         </div>
-        <div className="bg-violet-500 w-full h-[2000px] ">jimy</div>
+        <div className=" w-full h-[2000px]  xl:border-l-2">jimy</div>
       </div>
     </div>
   );

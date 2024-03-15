@@ -26,8 +26,14 @@ export const signin = async (req, res, next) => {
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
     //below we are removing the password from the res and sending all other info
     const { password: pass, ...rest } = validUser._doc;
+    // Calculate the expiration time (one year from now)
+    const expirationTime = new Date();
+    expirationTime.setFullYear(expirationTime.getFullYear() + 1);
     res
-      .cookie("access_token", token, { httpOnly: true })
+      .cookie("access_token", token, {
+        expires: expirationTime,
+        httpOnly: true,
+      })
       .status(200)
       .json(rest);
   } catch (error) {
@@ -44,8 +50,14 @@ export const google = async (req, res, next) => {
       // if the user exists we save it authenticate the user and sign in the user and save it in  cookie-token-
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       const { password: pass, ...rest } = user._doc;
+      // Calculate the expiration time (one year from now)
+      const expirationTime = new Date();
+      expirationTime.setFullYear(expirationTime.getFullYear() + 1);
       res
-        .cookie("access_token", token, { httpOnly: true })
+        .cookie("access_token", token, {
+          expires: expirationTime,
+          httpOnly: true,
+        })
         .status(200)
         .json(rest);
     } else {
@@ -66,8 +78,14 @@ export const google = async (req, res, next) => {
       await newUser.save();
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
       const { password: pass, ...rest } = newUser._doc;
+      // Calculate the expiration time (one year from now)
+      const expirationTime = new Date();
+      expirationTime.setFullYear(expirationTime.getFullYear() + 1);
       res
-        .cookie("access_token", token, { httpOnly: true })
+        .cookie("access_token", token, {
+          expires: expirationTime,
+          httpOnly: true,
+        })
         .status(200)
         .json(rest);
     }
