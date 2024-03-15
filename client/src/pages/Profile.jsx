@@ -15,6 +15,9 @@ import {
   deleteUserStart,
   deleteUserSuccess,
   deleteUserFailure,
+  signOutUserStart,
+  signOutUserSuccess,
+  signOutUserFailure,
 } from "../redux/user/userSlice";
 function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -89,21 +92,36 @@ function Profile() {
     }
   };
 
-  const handleDeleteUser = async (e) => {
+  const handleDeleteUser = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${_id}`,{
-        method: 'DELETE',
+      const res = await fetch(`/api/user/delete/${_id}`, {
+        method: "DELETE",
       });
       const data = await res.json();
       console.log(data);
-      if(data.success === false){
+      if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
         return;
       }
-      dispatch(deleteUserSuccess(data))
+      dispatch(deleteUserSuccess(data));
     } catch (error) {
-      dispatch(deleteUserFailure(error.message))
+      dispatch(deleteUserFailure(error.message));
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutUserStart());
+      const res = await fetch("/api/auth/signout");
+      const data = await res.json();
+      if ((data.success === false)) {
+        dispatch(signOutUserFailure(data.message));
+        return;
+      }
+      dispatch(signOutUserSuccess(data));
+    } catch (error) {
+      dispatch(signOutUserFailure(error.message));
     }
   };
   return (
@@ -144,10 +162,16 @@ function Profile() {
                 >
                   Edit Profile
                 </button>
-                <button className="xl:hidden bg-black     rounded-md p-1 text-white text-sm px-2 mr-2">
+                <button
+                  onClick={handleSignOut}
+                  className="xl:hidden bg-black     rounded-md p-1 text-white text-sm px-2 mr-2"
+                >
                   Sign Out
                 </button>
-                <button className="xl:hidden bg-red-500    rounded-md p-1 text-sm text-white px-2">
+                <button
+                  onClick={handleDeleteUser}
+                  className="xl:hidden bg-red-500    rounded-md p-1 text-sm text-white px-2"
+                >
                   Delete Account
                 </button>
               </div>
@@ -248,7 +272,10 @@ function Profile() {
             </form>
           )}
           <div className="absolute bottom-2 flex">
-            <button className="hidden xl:block bg-black     rounded-md p-1 text-white text-sm px-2 mr-2">
+            <button
+              onClick={handleSignOut}
+              className="hidden xl:block bg-black     rounded-md p-1 text-white text-sm px-2 mr-2"
+            >
               Sign Out
             </button>
             <button
