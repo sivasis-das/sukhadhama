@@ -2,19 +2,22 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { MdOutlineAddAPhoto } from "react-icons/md";
 import { app } from "../firebase";
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 function Profile() {
   const { currentUser } = useSelector((state) => state.user);
   const [showEdit, setShowEdit] = useState(false);
   const [file, setFile] = useState(undefined);
   const [fileProgressPerc, setFileProgressPerc] = useState(0);
-  const [fileUploadError, setFileUploadError] = useState(false)
-  const [formData, setFormData] = useState({})
-
-
+  const [fileUploadError, setFileUploadError] = useState(false);
+  const [formData, setFormData] = useState({});
 
   const fileRef = useRef(null);
-  const { username, email, avatar } = currentUser;
+  const { username, email, avatar, _id } = currentUser;
 
   // console.log(file);
   // console.log(URL.createObjectURL(file));
@@ -37,20 +40,22 @@ function Profile() {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log("Upload is " + progress + "% done");
-        setFileProgressPerc(Math.round(progress))
-        
+        setFileProgressPerc(Math.round(progress));
       },
       (error) => {
-        setFileUploadError(true)
+        setFileUploadError(true);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setFormData({...formData, avatar:downloadURL})
+          setFormData({ ...formData, avatar: downloadURL });
         });
       }
     );
   };
-  console.log(formData);
+  // console.log(formData);
+
+  
+
   return (
     <div className="absolute  top-0 bottom-0 left-0 right-0  -z-10 flex items-center justify-center">
       {/* main-card */}
@@ -66,7 +71,7 @@ function Profile() {
                 alt="profile photo"
                 className="rounded-full size-28 xl:size-48 object-cover"
               />
-              
+
               {showEdit ? (
                 <>
                   <div className="size-28 xl:size-48 bg-black bg-opacity-60 rounded-full absolute  top-0 "></div>
@@ -98,17 +103,28 @@ function Profile() {
               </div>
             )}
           </div>
-          {showEdit ? fileUploadError ? (<span className=" text-red-700 font-semibold text-sm ">Error while Uploading Image !</span>) :
-          fileProgressPerc>0 && fileProgressPerc < 100 ? (
-            <span className=" text-slate-700 font-semibold text-sm ">
-              {`Uploading ${fileProgressPerc}%`}
-            </span>
-          ) : fileProgressPerc === 100 ? (
-            <span className=" text-green-700 font-semibold text-sm ">Image Successfully Uploaded</span>
-          ):null:null}
+          {showEdit ? (
+            fileUploadError ? (
+              <span className=" text-red-700 font-semibold text-sm ">
+                Error while Uploading Image !
+              </span>
+            ) : fileProgressPerc > 0 && fileProgressPerc < 100 ? (
+              <span className=" text-slate-700 font-semibold text-sm ">
+                {`Uploading ${fileProgressPerc}%`}
+              </span>
+            ) : fileProgressPerc === 100 ? (
+              <span className=" text-green-700 font-semibold text-sm ">
+                Image Successfully Uploaded
+              </span>
+            ) : null
+          ) : null}
 
           {showEdit && (
-            <form action="" className="mt-3 flex flex-col gap-3">
+            <form
+              action=""
+              
+              className="mt-3 flex flex-col gap-3"
+            >
               <input
                 type="file"
                 src=""
