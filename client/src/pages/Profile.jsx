@@ -12,9 +12,12 @@ import {
   updateUserStart,
   updateUserSuccess,
   updateUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  deleteUserFailure,
 } from "../redux/user/userSlice";
 function Profile() {
-  const { currentUser,loading,error } = useSelector((state) => state.user);
+  const { currentUser, loading, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [showEdit, setShowEdit] = useState(false);
   const [file, setFile] = useState(undefined);
@@ -66,17 +69,17 @@ function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      dispatch(updateUserStart())
-      const res = await fetch(`/api/user/update/${_id}`,{
+      dispatch(updateUserStart());
+      const res = await fetch(`/api/user/update/${_id}`, {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
       const data = await res.json();
-      if (data.success===false) {
-        dispatch(updateUserFailure(data.message))
+      if (data.success === false) {
+        dispatch(updateUserFailure(data.message));
         return;
       }
       dispatch(updateUserSuccess(data));
@@ -86,6 +89,23 @@ function Profile() {
     }
   };
 
+  const handleDeleteUser = async (e) => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${_id}`,{
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      console.log(data);
+      if(data.success === false){
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data))
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message))
+    }
+  };
   return (
     <div className="absolute  top-14 bottom-0 left-0 right-0  -z-10 flex items-center justify-center">
       {/* main-card  */}
@@ -203,8 +223,11 @@ function Profile() {
               </div>
 
               <div className="space-x-2">
-                <button disabled={loading} className="bg-orange-600 rounded-md text-white px-3">
-                  {loading?"Loading...":"Save"}
+                <button
+                  disabled={loading}
+                  className="bg-orange-600 rounded-md text-white px-3"
+                >
+                  {loading ? "Loading..." : "Save"}
                 </button>
                 <button
                   type="button"
@@ -214,15 +237,24 @@ function Profile() {
                   Cancel
                 </button>
               </div>
-              {error?<p className="text-red-600 font-semibold">{error}</p>:null}
-              {updateSuccessfull?<p className="text-green-700 font-semibold">Profile Updated Successfully !</p>:null}
+              {error ? (
+                <p className="text-red-600 font-semibold">{error}</p>
+              ) : null}
+              {updateSuccessfull ? (
+                <p className="text-green-700 font-semibold">
+                  Profile Updated Successfully !
+                </p>
+              ) : null}
             </form>
           )}
           <div className="absolute bottom-2 flex">
             <button className="hidden xl:block bg-black     rounded-md p-1 text-white text-sm px-2 mr-2">
               Sign Out
             </button>
-            <button className="hidden xl:block bg-red-500    rounded-md p-1 text-sm text-white px-2">
+            <button
+              onClick={handleDeleteUser}
+              className="hidden xl:block bg-red-500    rounded-md p-1 text-sm text-white px-2"
+            >
               Delete Account
             </button>
           </div>
