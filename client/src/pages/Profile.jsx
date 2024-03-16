@@ -292,11 +292,10 @@ function Profile() {
           <div className="text-2xl font-bold text-orange-600 mt-4  flex">
             List your properties
             <button className="ml-4 bg-orange-600 text-white rounded-sm p-1 hover:bg-orange-400 shadow-md ">
-              <Link to="/createlisting">
+              <Link to="/create-listing">
                 <FaPlus size={30} />
               </Link>
             </button>
-           
           </div>
         </div>
       </div>

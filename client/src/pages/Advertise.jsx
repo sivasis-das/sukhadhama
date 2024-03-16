@@ -23,7 +23,7 @@ function Advertise() {
             </p>
             <div className="w-11/12 m-auto flex justify-center sm:justify-start">
               {currentUser ? (
-                <Link to="/createlisting">
+                <Link to="/create-listing">
                   <button className="bg-orange-600 px-5 py-3 rounded-full text-white text-xl font-bold hover:bg-white hover:text-orange-600 border-orange-600 border-2 transition ease-in-out duration-500">
                     Create Listings{" "}
                   </button>

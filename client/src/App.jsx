@@ -35,7 +35,7 @@ function App() {
         <Route path="marketing" element={<Advertise />} />
         
         <Route
-          path="createlisting"
+          path="create-listing"
           element={
             <PrivateRoute>
               <CreateListings />
