@@ -7,14 +7,48 @@ import {
 import React, { useState } from "react";
 import { app } from "../firebase";
 import UploadImageCard from "../components/UploadImageCard";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function CreateListings() {
+  const { currentUser } = useSelector((state) => state.user);
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
+    name: "",
+    description: "",
+    address: "",
+    latitude: 0,
+    longitude: 0,
+    type: "sell",
+    bedrooms: 1,
+    bathrooms: 1,
+    regularPrice: 50,
+    discountPrice: 0,
+    offer: false,
+    parking: false,
+    furnished: false,
   });
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
+  const {
+    name,
+    description,
+    address,
+    latitude,
+    longitude,
+    type,
+    bedrooms,
+    bathrooms,
+    regularPrice,
+    discountPrice,
+    offer,
+    parking,
+    furnished,
+  } = formData;
 
   // console.log("files", files);
   // console.log(formData);
@@ -35,13 +69,16 @@ function CreateListings() {
             imageUrls: formData.imageUrls.concat(urls), //we are adding an array of new images to the already existing imagesUrls array
           });
           setImageUploadError(false);
+          setError(false);
           setUploading(false);
         })
         .catch((error) => {
+          setError(false);
           setImageUploadError("Image Upload failed (2 MB max per image)");
           setUploading(false);
         });
     } else {
+      setError(false);
       setImageUploadError("You can only upload 6 images per listing");
       setUploading(false);
     }
@@ -81,13 +118,65 @@ function CreateListings() {
     });
   };
 
+  const handleChange = (e) => {
+    let boolean;
+    if (
+      e.target.name == "parking" ||
+      e.target.name == "furnished" ||
+      e.target.name == "offer"
+    ) {
+      if (e.target.value === "true") {
+        boolean = true;
+      } else if (e.target.value === "false") {
+        boolean = false;
+      }
+      setFormData({ ...formData, [e.target.name]: boolean });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+  };
+  console.log("formdata is:", formData);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (formData.imageUrls.length < 1)
+        return setError("You must upload atleast one image");
+      if (offer === true && +formData.regularPrice < +formData.discountPrice)
+        return setError("Discount price must be lower than regular price");
+      setLoading(true);
+      setError(false);
+      const res = await fetch("/api/listing/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...formData, userRef: currentUser._id }),
+      });
+      console.log("res received");
+      const data = await res.json();
+      setLoading(false);
+      if (data.success === false) {
+        console.log("jimy");
+        setError(data.message);
+      }
+      navigate(`/listing/${data._id}`);
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="w-full h-fit  bg-gradient-to-b from-orange-600 to-orange-400 py-5">
       <div className="w-11/12 h-fit m-auto border-2  rounded-xl p-3  shadow-md bg-white   ">
         <h3 className="text-3xl font-bold text-orange-500 ">
           Create You Listing
         </h3>
-        <form action="" className="flex flex-col lg:flex-row gap-3">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col lg:flex-row gap-3"
+        >
           {/* info upload */}
           <div className="*:my-2 flex-1">
             <div>
@@ -97,10 +186,12 @@ function CreateListings() {
               <input
                 type="text"
                 id="name"
+                name="name"
                 placeholder="Name"
                 required
                 maxLength={62}
                 minLength={10}
+                onChange={handleChange}
                 className="p-2 w-full rounded-md outline-none border-2 focus:border-orange-600
             transition duration-500 ease-in-out text-lg shadow-md"
               />
@@ -116,8 +207,10 @@ function CreateListings() {
               <input
                 type="text"
                 id="description"
+                name="description"
                 placeholder="Description"
                 required
+                onChange={handleChange}
                 className="p-2 w-full rounded-md outline-none border-2 focus:border-orange-600
             transition duration-500 ease-in-out text-lg shadow-md"
               />
@@ -130,8 +223,10 @@ function CreateListings() {
               <input
                 type="text"
                 id="address"
+                name="address"
                 placeholder="Address"
                 required
+                onChange={handleChange}
                 className="p-2 w-full rounded-md outline-none border-2 focus:border-orange-600
             transition duration-500 ease-in-out text-lg shadow-md"
               />
@@ -146,6 +241,7 @@ function CreateListings() {
                   name="type"
                   id="sell"
                   value="sell"
+                  onChange={handleChange}
                   className="peer/sell hidden"
                   required
                 />
@@ -160,6 +256,7 @@ function CreateListings() {
                   name="type"
                   id="rent"
                   value="rent"
+                  onChange={handleChange}
                   className="peer/rent hidden "
                   required
                 />
@@ -183,6 +280,7 @@ function CreateListings() {
                   step={1}
                   min={1}
                   max={10}
+                  onChange={handleChange}
                   className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600 outline-none border-2 rounded-lg"
                   required
                 />
@@ -198,6 +296,7 @@ function CreateListings() {
                   step={1}
                   min={1}
                   max={10}
+                  onChange={handleChange}
                   className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out outline-none focus:border-orange-600  border-2 rounded-lg "
                   required
                 />
@@ -212,6 +311,7 @@ function CreateListings() {
                     name="parking"
                     id="parkyes"
                     value={true}
+                    onChange={handleChange}
                     className="peer/parkyes hidden"
                     required
                   />
@@ -226,6 +326,7 @@ function CreateListings() {
                     name="parking"
                     id="parkno"
                     value={false}
+                    onChange={handleChange}
                     className="peer/parkno hidden"
                     required
                   />
@@ -247,6 +348,7 @@ function CreateListings() {
                     name="furnished"
                     id="furnishedyes"
                     value={true}
+                    onChange={handleChange}
                     className="peer/furnishedyes hidden"
                     required
                   />
@@ -261,6 +363,7 @@ function CreateListings() {
                     name="furnished"
                     id="furnishedno"
                     value={false}
+                    onChange={handleChange}
                     className="peer/furnishedno hidden"
                     required
                   />
@@ -281,6 +384,8 @@ function CreateListings() {
                   type="number"
                   name="latitude"
                   id="latitude"
+                  step={0.00000001}
+                  onChange={handleChange}
                   className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none"
                   required
                 />
@@ -291,6 +396,8 @@ function CreateListings() {
                   type="number"
                   name="longitude"
                   id="longitude"
+                  step={0.00000001}
+                  onChange={handleChange}
                   className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none"
                   required
                 />
@@ -305,6 +412,7 @@ function CreateListings() {
                   name="offer"
                   id="offeryes"
                   value={true}
+                  onChange={handleChange}
                   className="peer/offeryes hidden"
                   required
                 />
@@ -319,6 +427,7 @@ function CreateListings() {
                   name="offer"
                   id="offerno"
                   value={false}
+                  onChange={handleChange}
                   className="peer/offerno hidden"
                   required
                 />
@@ -334,7 +443,7 @@ function CreateListings() {
             <div className="flex gap-4">
               <div className="flex-1">
                 <h3 className="font-semibold text-gray-600 ">
-                  Regular Price ($/Month):
+                  Regular Price {type == "rent" ? "($/Month)" : "($)"}:
                 </h3>
                 <div>
                   <input
@@ -342,30 +451,32 @@ function CreateListings() {
                     name="regularPrice"
                     id="regular price"
                     step={1}
-                    min={1}
+                    defaultValue={0}
+                    onChange={handleChange}
                     className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none"
                     required
                   />
                 </div>
               </div>
-
-              <div className="flex-1">
-                <h3 className="font-semibold text-gray-600 ">
-                  Discounted Price ($/Month):
-                </h3>
-                <div>
-                  <input
-                    type="number"
-                    name="discountedPrice"
-                    id="discounted price"
-                    step={1}
-                    min={1}
-                    className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none"
-                    required
-                  />
-                  <p></p>
+              {offer && (
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-600 ">
+                    Discounted Price {type == "rent" ? "($/Month)" : "($)"}:
+                  </h3>
+                  <div>
+                    <input
+                      type="number"
+                      name="discountPrice"
+                      id="discount price"
+                      step={1}
+                      defaultValue={0}
+                      onChange={handleChange}
+                      className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none"
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
           {/* photos upload */}
@@ -414,11 +525,15 @@ function CreateListings() {
             </div>
 
             <button
+              disabled={loading || uploading}
               type="submit"
               className="bg-orange-600 rounded-lg text-white font-semibold w-full hover:bg-orange-800 active:bg-orange-950 shadow-md transition duration-200 ease-in h-11  flex items-center justify-center gap-3 mt-6"
             >
-              Create Listing
+              {loading ? "Creating..." : "Create Listing"}
             </button>
+            {error && (
+              <p className="text-sm text-red-600 font-semibold">{error}</p>
+            )}
           </div>
         </form>
       </div>
