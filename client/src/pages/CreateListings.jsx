@@ -1,6 +1,86 @@
-import React from "react";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import React, { useState } from "react";
+import { app } from "../firebase";
+import UploadImageCard from "../components/UploadImageCard";
 
 function CreateListings() {
+  const [files, setFiles] = useState([]);
+  const [formData, setFormData] = useState({
+    imageUrls: [],
+  });
+  const [imageUploadError, setImageUploadError] = useState(false);
+  const [uploading, setUploading] = useState(false);
+
+  // console.log("files", files);
+  // console.log(formData);
+  const handleImageSubmit = () => {
+    if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
+      setImageUploadError(false);
+      setUploading(true);
+      const promises = [];
+
+      for (let file of files) {
+        promises.push(storeImage(file));
+      }
+      //one after another images are uploaded to the firebase, it may take some time to produce the code or for resolve, so in (Promise.all) we have the an array of all the promises-- **refer MDN-promise.all notes** once all the promises are resolved we input the urls or output into our state.--output is an array
+      Promise.all(promises)
+        .then((urls) => {
+          setFormData({
+            ...formData,
+            imageUrls: formData.imageUrls.concat(urls), //we are adding an array of new images to the already existing imagesUrls array
+          });
+          setImageUploadError(false);
+          setUploading(false);
+        })
+        .catch((error) => {
+          setImageUploadError("Image Upload failed (2 MB max per image)");
+          setUploading(false);
+        });
+    } else {
+      setImageUploadError("You can only upload 6 images per listing");
+      setUploading(false);
+    }
+  };
+
+  const storeImage = async (file) => {
+    return new Promise((resolve, reject) => {
+      const storage = getStorage(app);
+      const fileName = new Date().getTime() + file.name;
+      const storageRef = ref(storage, fileName);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+        },
+        (error) => {
+          reject(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            resolve(downloadURL);
+          });
+        }
+      );
+    });
+  };
+
+  const handleImageDelete = (id) => {
+    // console.log("id",id);
+    setFormData({
+      ...formData,
+      imageUrls: formData.imageUrls.filter((_, index) => index !== id),
+    });
+  };
+
   return (
     <div className="w-full h-fit  bg-gradient-to-b from-orange-600 to-orange-400 py-5">
       <div className="w-11/12 h-fit m-auto border-2  rounded-xl p-3  shadow-md bg-white   ">
@@ -71,7 +151,7 @@ function CreateListings() {
                 />
                 <label
                   htmlFor="sell"
-                  className="peer-checked/sell:bg-orange-600 peer-checked/sell:text-white flex-1  rounded-md bg-white shadow-md text-center  font-semibold p-2 border-2 text-gray-600"
+                  className="peer-checked/sell:bg-orange-600 peer-checked/sell:text-white flex-1  rounded-md bg-white shadow-md text-center  font-semibold p-2 border-2 text-gray-600 hover:bg-gray-200"
                 >
                   Sell
                 </label>
@@ -85,7 +165,7 @@ function CreateListings() {
                 />
                 <label
                   htmlFor="rent"
-                  className="peer-checked/rent:bg-orange-600 peer-checked/rent:text-white flex-1 rounded-md bg-white shadow-md text-center  font-semibold p-2 border-2 text-gray-600"
+                  className="peer-checked/rent:bg-orange-600 peer-checked/rent:text-white flex-1 rounded-md bg-white shadow-md text-center  font-semibold p-2 border-2 text-gray-600 hover:bg-gray-200"
                 >
                   Rent
                 </label>
@@ -137,7 +217,7 @@ function CreateListings() {
                   />
                   <label
                     htmlFor="parkyes"
-                    className="peer-checked/parkyes:bg-orange-600 peer-checked/parkyes:text-white flex-1  rounded bg-white shadow-md text-center  font-semibold p-2 border text-gray-600"
+                    className="peer-checked/parkyes:bg-orange-600 peer-checked/parkyes:text-white flex-1  rounded bg-white shadow-md text-center  font-semibold p-2 border text-gray-600 hover:bg-gray-200"
                   >
                     Yes
                   </label>
@@ -151,7 +231,7 @@ function CreateListings() {
                   />
                   <label
                     htmlFor="parkno"
-                    className="peer-checked/parkno:bg-orange-600 peer-checked/parkno:text-white flex-1 rounded bg-white shadow-md text-center  font-semibold p-2 border text-gray-600"
+                    className="peer-checked/parkno:bg-orange-600 peer-checked/parkno:text-white flex-1 rounded bg-white shadow-md text-center  font-semibold p-2 border text-gray-600 hover:bg-gray-200"
                   >
                     No
                   </label>
@@ -172,7 +252,7 @@ function CreateListings() {
                   />
                   <label
                     htmlFor="furnishedyes"
-                    className="peer-checked/furnishedyes:bg-orange-600 peer-checked/furnishedyes:text-white flex-1  rounded bg-white shadow-md text-center  font-semibold p-2 border text-gray-600"
+                    className="peer-checked/furnishedyes:bg-orange-600 peer-checked/furnishedyes:text-white flex-1  rounded bg-white shadow-md text-center  font-semibold p-2 border text-gray-600 hover:bg-gray-200"
                   >
                     Yes
                   </label>
@@ -186,7 +266,7 @@ function CreateListings() {
                   />
                   <label
                     htmlFor="furnishedno"
-                    className="peer-checked/furnishedno:bg-orange-600 peer-checked/furnishedno:text-white flex-1 rounded bg-white shadow-md text-center  font-semibold p-2 border text-gray-600"
+                    className="peer-checked/furnishedno:bg-orange-600 peer-checked/furnishedno:text-white flex-1 rounded bg-white shadow-md text-center  font-semibold p-2 border text-gray-600 hover:bg-gray-200"
                   >
                     No
                   </label>
@@ -230,7 +310,7 @@ function CreateListings() {
                 />
                 <label
                   htmlFor="offeryes"
-                  className="peer-checked/offeryes:bg-orange-600 peer-checked/offeryes:text-white flex-1  rounded-md bg-white shadow-md text-center font-semibold p-2 border-2 text-gray-600"
+                  className="peer-checked/offeryes:bg-orange-600 peer-checked/offeryes:text-white flex-1  rounded-md bg-white shadow-md text-center font-semibold p-2 border-2 text-gray-600 hover:bg-gray-200"
                 >
                   Yes
                 </label>
@@ -244,7 +324,7 @@ function CreateListings() {
                 />
                 <label
                   htmlFor="offerno"
-                  className="peer-checked/offerno:bg-orange-600 peer-checked/offerno:text-white flex-1 rounded-md bg-white shadow-md text-center font-semibold p-2 border-2 text-gray-600"
+                  className="peer-checked/offerno:bg-orange-600 peer-checked/offerno:text-white flex-1 rounded-md bg-white shadow-md text-center font-semibold p-2 border-2 text-gray-600 hover:bg-gray-200"
                 >
                   No
                 </label>
@@ -289,22 +369,48 @@ function CreateListings() {
             </div>
           </div>
           {/* photos upload */}
-          <div className="flex-1">
-            <h3 className="font-semibold  text-gray-600">Images:</h3>
-            <p className="text-gray-600">
-              The first image will be the cover (max 6)
+          <div className="flex-1 *:my-2">
+            <div>
+              <h3 className="font-semibold  text-gray-600">Images:</h3>
+              <p className="text-gray-600">
+                The first image will be the cover (max 6)
+              </p>
+              <div className="flex gap-4">
+                <input
+                  onChange={(e) => setFiles(e.target.files)}
+                  type="file"
+                  name="images"
+                  id="images"
+                  accept="image/*"
+                  multiple
+                  className="text-gray-600  text-center shadow-md bg-white p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none file:text-orange-600 file:font-semibold file:border-0 file:bg-slate-100 file:rounded-full file:px-4 file:hover:bg-orange-600 file:hover:text-white file:hover:duration-500 "
+                  required
+                />
+                <button
+                  type="button"
+                  disabled={uploading}
+                  onClick={handleImageSubmit}
+                  className="px-3 rounded-lg border-2 border-orange-600 text-orange-600 font-semibold hover:text-white hover:bg-orange-600 duration-300 ease-in-out shadow-md"
+                >
+                  {uploading ? "Uploading..." : "Upload"}
+                </button>
+              </div>
+            </div>
+
+            <p className="text-red-600 text-sm font-semibold">
+              {imageUploadError && imageUploadError}
             </p>
-            <div className="flex gap-4">
-              <input
-                type="file"
-                name="images"
-                id="images"
-                accept="image/*"
-                multiple
-                className="text-gray-600  text-center shadow-md bg-white p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none file:text-orange-600 file:font-semibold file:border-0 file:bg-slate-100 file:rounded-full file:px-4 file:hover:bg-orange-600 file:hover:text-white file:hover:duration-500 "
-                required
-              />
-              <button className="px-3 rounded-lg border-2 border-orange-600 text-orange-600 font-semibold hover:text-white hover:bg-orange-600 duration-300 ease-in-out shadow-md">Upload</button>
+
+            <div>
+              {formData.imageUrls &&
+                formData.imageUrls.map((url, index) => (
+                  <UploadImageCard
+                    key={url}
+                    data={url}
+                    id={index}
+                    handleImageDelete={handleImageDelete}
+                  />
+                ))}
             </div>
 
             <button
