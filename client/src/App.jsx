@@ -12,6 +12,8 @@ import Profile from "./pages/Profile";
 import Signin from "./pages/Signin";
 import SignUp from "./pages/SignUp";
 import PrivateRoute from "./components/PrivateRoute";
+import CreateListings from "./pages/CreateListings";
+import Advertise from "./pages/Advertise";
 
 function App() {
   const router = createBrowserRouter(
@@ -30,6 +32,16 @@ function App() {
 
         <Route path="sign-up" element={<SignUp />} />
         <Route path="sign-in" element={<Signin />} />
+        <Route path="marketing" element={<Advertise />} />
+        
+        <Route
+          path="createlisting"
+          element={
+            <PrivateRoute>
+              <CreateListings />
+            </PrivateRoute>
+          }
+        />
       </Route>
     )
   );

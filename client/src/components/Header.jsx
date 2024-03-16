@@ -17,14 +17,15 @@ function Header() {
         </div>
         {/* container */}
         <div
+          onClick={()=>setShowNav(false)}
           className={`${
             showNav
-              ? "absolute  left-0 right-0 top-0 bottom-0 bg-gray-700 bg-opacity-80 ease-in-out duration-500"
+              ? "absolute z-40 left-0 right-0 top-0 bottom-0 bg-gray-700 bg-opacity-80 ease-in-out duration-500"
               : "hidden"
           } `}
         ></div>
         <div
-          className={`absolute bg-white  left-0 top-0 bottom-0 h-full  ${
+          className={`absolute z-50 bg-white  left-0 top-0 bottom-0 h-full  ${
             showNav
               ? "translate-x-0 ease-in-out duration-500"
               : "-translate-x-full ease-in-out duration-500"
@@ -41,37 +42,37 @@ function Header() {
               <RxCross1 size={35} onClick={() => setShowNav(false)} />
             </div>
           </div>
-          <ul className="*:pl-2 text-xl *:m-4">
+          <ul className="*:pl-2 text-xl *:m-4 ">
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/" className="inline-block w-full">Home</Link>
             </li>
             <hr />
             <li>
-              <Link to="/buy">Buy</Link>
+              <Link to="/buy" className="inline-block w-full">Buy</Link>
             </li>
             <hr />
             <li>
-              <Link to="/sell">Sell</Link>
+              <Link to="/sell" className="inline-block w-full">Sell</Link>
             </li>
             <hr />
             <li>
-              <Link to="/rent">Rent</Link>
+              <Link to="/rent" className="inline-block w-full">Rent</Link>
             </li>
             <hr />
             <li>
-              <Link to="/findrealtor">Find Realtor&#174;</Link>
+              <Link to="/findrealtor" className="inline-block w-full">Find Realtor&#174;</Link>
             </li>
             <hr />
             <li>
-              <Link to="/myhome">My Home</Link>
+              <Link to="/myhome" className="inline-block w-full">My Home</Link>
             </li>
             <hr />
             <li>
-              <Link to="/news">News & Insights</Link>
+              <Link to="/news" className="inline-block w-full">News & Insights</Link>
             </li>
             <hr />
             <li>
-              <Link to="/ads">Advertise</Link>
+              <Link to="/marketing" className="inline-block w-full">Advertise</Link>
             </li>
             <hr />
           </ul>
@@ -174,7 +175,7 @@ function Header() {
           </ul>
           <div className="flex items-center text-md font-semibold space-x-3 underline *:cursor-pointer">
             <p>Manage rentals</p>
-            <p>Advertise</p>
+            <Link to="/marketing"><p>Advertise</p></Link>
           </div>
         </div>
         {currentUser ? (

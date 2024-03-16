@@ -19,6 +19,8 @@ import {
   signOutUserSuccess,
   signOutUserFailure,
 } from "../redux/user/userSlice";
+import { Link } from "react-router-dom";
+import { FaPlus } from "react-icons/fa6";
 function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -115,7 +117,7 @@ function Profile() {
       dispatch(signOutUserStart());
       const res = await fetch("/api/auth/signout");
       const data = await res.json();
-      if ((data.success === false)) {
+      if (data.success === false) {
         dispatch(signOutUserFailure(data.message));
         return;
       }
@@ -286,7 +288,17 @@ function Profile() {
             </button>
           </div>
         </div>
-        <div className=" w-full h-[2000px]  xl:border-l-2">jimy</div>
+        <div className=" w-full h-[2000px]  xl:border-l-2 p-2">
+          <div className="text-2xl font-bold text-orange-600 mt-4  flex">
+            List your properties
+            <button className="ml-4 bg-orange-600 text-white rounded-sm p-1 hover:bg-orange-400 shadow-md ">
+              <Link to="/createlisting">
+                <FaPlus size={30} />
+              </Link>
+            </button>
+           
+          </div>
+        </div>
       </div>
     </div>
   );
