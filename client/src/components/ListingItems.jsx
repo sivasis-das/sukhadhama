@@ -5,7 +5,7 @@ import { MdModeEdit } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 
-function ListingItems({ listing, onDelete, onEdit }) {
+function ListingItems({ listing, handleListingDelete, handleListingEdit }) {
   const timePeriod = formatDistanceToNow(listing.createdAt);
   return (
     <li className="relative bg-white flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-2 ">
@@ -54,17 +54,17 @@ function ListingItems({ listing, onDelete, onEdit }) {
           </div>
         </div>
       </Link>
-      {onEdit && (
+      {handleListingEdit && (
         <MdModeEdit
-          onClick={() => onEdit(id)}
-          className="absolute bottom-2 right-8 cursor-pointer text-gray-400 hover:text-blue-600"
+          onClick={() => handleListingEdit(listing._id)}
+          className="absolute bottom-2 right-8 cursor-pointer text-gray-400 hover:text-orange-600"
           size={20}
         />
       )}
-      {onDelete && (
+      {handleListingDelete && (
         <FaTrash
-          onClick={() => onDelete(id)}
-          className="absolute bottom-2 right-2 cursor-pointer text-gray-400 hover:text-red-600"
+          onClick={() => handleListingDelete(listing._id)}
+          className="absolute bottom-2 right-2 cursor-pointer text-gray-400 hover:text-black"
         />
       )}
     </li>

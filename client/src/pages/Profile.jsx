@@ -31,31 +31,30 @@ function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [updateSuccessfull, setUpdateSuccessfull] = useState(false);
   const [formData, setFormData] = useState({});
-  const [userListings, setUserListings] = useState([])
-  const [showListingError, setShowListingError] = useState(false)
+  const [userListings, setUserListings] = useState([]);
+  const [showListingError, setShowListingError] = useState(false);
 
   const fileRef = useRef(null);
   const { username, email, avatar, _id } = currentUser;
 
-
-  useEffect(()=>{
-    async function fetchListing(){
+  useEffect(() => {
+    async function fetchListing() {
       try {
         setShowListingError(false);
         const res = await fetch(`api/user/listings/${currentUser._id}`);
         const data = await res.json();
-        
-        if(data.success === false){
-          setShowListingError(true)
-          return
+
+        if (data.success === false) {
+          setShowListingError(true);
+          return;
         }
-        setUserListings(data)
+        setUserListings(data);
       } catch (error) {
-        setShowListingError(true)
+        setShowListingError(true);
       }
-    } 
-    fetchListing()
-  },[])
+    }
+    fetchListing();
+  }, []);
 
   // console.log(file);
   // console.log(URL.createObjectURL(file));
@@ -64,8 +63,6 @@ function Profile() {
       handleFileUpload(file);
     }
   }, [file]);
-
-
 
   //follow the upload example from the firebase storage full example
   const handleFileUpload = (file) => {
@@ -151,10 +148,30 @@ function Profile() {
       dispatch(signOutUserFailure(error.message));
     }
   };
+
+  const handleListingDelete = async (id) => {
+    // console.log("delete is",id);
+    try {
+      const res = await fetch(`/api/listing/delete/${id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+      setUserListings((prev) => prev.filter((listing) => listing._id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleListingEdit = async (id) => {};
+
   return (
     <div className="absolute  top-14 xl:top-12 bottom-0 left-0 right-0  -z-10 flex items-center justify-center">
       {/* main-card  */}
-      <div className="w-full h-full  flex flex-col xl:flex-row overflow-y-scroll scrollbar">
+      <div className="w-full h-full  flex flex-col xl:flex-row overflow-y-auto">
         {/* profile section */}
         <div className="xl:w-3/12 xl:sticky xl:top-0 px-2 pt-2">
           {/* photo + buttons */}
@@ -313,7 +330,7 @@ function Profile() {
             </button>
           </div>
         </div>
-        <div className=" w-full h-fit  xl:border-l-2 p-2 bg-orange-600 mt-4 xl:mt-0">
+        <div className=" w-full h-fit  xl:border-l-2 p-2 bg-orange-600 mt-4 xl:mt-0 ">
           <div className="text-2xl font-bold text-white mt-4  flex pl-3">
             List your properties
             <button className="ml-4 bg-white text-orange-600 rounded-sm p-1 hover:bg-gray-800 shadow-md ">
@@ -323,12 +340,23 @@ function Profile() {
             </button>
           </div>
           <div className="*:my-3">
-            <h3 className="text-2xl font-bold text-white mt-4 pl-3">My Listings :</h3>
-            <p className="text-red-600 text-sm font-semibold">{showListingError?"Error showing listing":null}</p>
+            <h3 className="text-2xl font-bold text-white mt-4 pl-3">
+              My Listings :
+            </h3>
+            <p className="text-red-600 text-sm font-semibold">
+              {showListingError ? "Error showing listing" : null}
+            </p>
             <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mt-6 mb-6">
-                {
-                  userListings && userListings.length> 0 && userListings.map((listing)=><ListingItems key={listing._id} listing={listing} />)
-                }
+              {userListings &&
+                userListings.length > 0 &&
+                userListings.map((listing) => (
+                  <ListingItems
+                    key={listing._id}
+                    listing={listing}
+                    handleListingDelete={handleListingDelete}
+                    handleListingEdit={handleListingEdit}
+                  />
+                ))}
             </ul>
           </div>
         </div>
