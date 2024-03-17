@@ -21,6 +21,7 @@ import {
 } from "../redux/user/userSlice";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
+import ListingItems from "../components/ListingItems";
 function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -30,9 +31,31 @@ function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [updateSuccessfull, setUpdateSuccessfull] = useState(false);
   const [formData, setFormData] = useState({});
+  const [userListings, setUserListings] = useState([])
+  const [showListingError, setShowListingError] = useState(false)
 
   const fileRef = useRef(null);
   const { username, email, avatar, _id } = currentUser;
+
+
+  useEffect(()=>{
+    async function fetchListing(){
+      try {
+        setShowListingError(false);
+        const res = await fetch(`api/user/listings/${currentUser._id}`);
+        const data = await res.json();
+        
+        if(data.success === false){
+          setShowListingError(true)
+          return
+        }
+        setUserListings(data)
+      } catch (error) {
+        setShowListingError(true)
+      }
+    } 
+    fetchListing()
+  },[])
 
   // console.log(file);
   // console.log(URL.createObjectURL(file));
@@ -41,6 +64,8 @@ function Profile() {
       handleFileUpload(file);
     }
   }, [file]);
+
+
 
   //follow the upload example from the firebase storage full example
   const handleFileUpload = (file) => {
@@ -127,11 +152,11 @@ function Profile() {
     }
   };
   return (
-    <div className="absolute  top-14 bottom-0 left-0 right-0  -z-10 flex items-center justify-center">
+    <div className="absolute  top-14 xl:top-12 bottom-0 left-0 right-0  -z-10 flex items-center justify-center">
       {/* main-card  */}
       <div className="w-full h-full  flex flex-col xl:flex-row overflow-y-scroll scrollbar">
         {/* profile section */}
-        <div className="xl:w-3/12 xl:sticky xl:top-0 px-2">
+        <div className="xl:w-3/12 xl:sticky xl:top-0 px-2 pt-2">
           {/* photo + buttons */}
           <div className="flex gap-3 xl:flex-col ">
             <div className="relative">
@@ -288,14 +313,23 @@ function Profile() {
             </button>
           </div>
         </div>
-        <div className=" w-full h-[2000px]  xl:border-l-2 p-2">
-          <div className="text-2xl font-bold text-orange-600 mt-4  flex">
+        <div className=" w-full h-fit  xl:border-l-2 p-2 bg-orange-600 mt-4 xl:mt-0">
+          <div className="text-2xl font-bold text-white mt-4  flex pl-3">
             List your properties
-            <button className="ml-4 bg-orange-600 text-white rounded-sm p-1 hover:bg-orange-400 shadow-md ">
+            <button className="ml-4 bg-white text-orange-600 rounded-sm p-1 hover:bg-gray-800 shadow-md ">
               <Link to="/create-listing">
                 <FaPlus size={30} />
               </Link>
             </button>
+          </div>
+          <div className="*:my-3">
+            <h3 className="text-2xl font-bold text-white mt-4 pl-3">My Listings :</h3>
+            <p className="text-red-600 text-sm font-semibold">{showListingError?"Error showing listing":null}</p>
+            <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mt-6 mb-6">
+                {
+                  userListings && userListings.length> 0 && userListings.map((listing)=><ListingItems key={listing._id} listing={listing} />)
+                }
+            </ul>
           </div>
         </div>
       </div>

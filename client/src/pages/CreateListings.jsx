@@ -111,6 +111,7 @@ function CreateListings() {
   };
 
   const handleImageDelete = (id) => {
+    //check firebase if you can delete uploaded images from the storage.
     // console.log("id",id);
     setFormData({
       ...formData,
