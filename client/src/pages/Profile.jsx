@@ -76,7 +76,7 @@ function Profile() {
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
+        // console.log("Upload is " + progress + "% done");
         setFileProgressPerc(Math.round(progress));
       },
       (error) => {
@@ -123,7 +123,7 @@ function Profile() {
         method: "DELETE",
       });
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
         return;
@@ -157,12 +157,12 @@ function Profile() {
       });
       const data = await res.json();
       if (data.success === false) {
-        console.log(data.message);
+        // console.log(data.message);
         return;
       }
       setUserListings((prev) => prev.filter((listing) => listing._id !== id));
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -330,17 +330,17 @@ function Profile() {
             </button>
           </div>
         </div>
-        <div className=" w-full h-fit  xl:border-l-2 p-2 bg-orange-600 mt-4 xl:mt-0 ">
-          <div className="text-2xl font-bold text-white mt-4  flex pl-3">
+        <div className="relative w-full xl:overflow-y-scroll  xl:border-l-2 p-2  mt-4 xl:mt-0 ">
+          <div className="text-2xl font-bold text-orange-600 mt-4  flex pl-3">
             List your properties
-            <button className="ml-4 bg-white text-orange-600 rounded-sm p-1 hover:bg-gray-800 shadow-md ">
+            <button className="ml-4 bg-orange-600 text-white rounded-sm p-1 hover:bg-orange-400 shadow-md ">
               <Link to="/create-listing">
                 <FaPlus size={30} />
               </Link>
             </button>
           </div>
           <div className="*:my-3">
-            <h3 className="text-2xl font-bold text-white mt-4 pl-3">
+            <h3 className="text-2xl font-bold text-orange-600 mt-4 pl-3">
               My Listings :
             </h3>
             <p className="text-red-600 text-sm font-semibold">
@@ -358,6 +358,7 @@ function Profile() {
                   />
                 ))}
             </ul>
+            
           </div>
         </div>
       </div>

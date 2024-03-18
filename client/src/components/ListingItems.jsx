@@ -8,7 +8,7 @@ import { formatDistanceToNow } from "date-fns";
 function ListingItems({ listing, handleListingDelete, handleListingEdit }) {
   const timePeriod = formatDistanceToNow(listing.createdAt);
   return (
-    <li className="relative bg-white flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-2 ">
+    <li className="relative bg-white border flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-2 ">
       <Link className="contents" to={`/listing/${listing._id}`}>
         <img
           src={listing.imageUrls[0]}
