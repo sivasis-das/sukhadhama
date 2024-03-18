@@ -6,8 +6,10 @@
     scrollbar-width: none;
 } */
 
-
-/* html,body{
+#root{
     height: 100%;
-    background: orangered;
-}  */
+}
+html,body{
+    height: 100%;
+    
+} 

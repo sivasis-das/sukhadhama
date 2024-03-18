@@ -37,6 +37,8 @@ function Profile() {
   const fileRef = useRef(null);
   const navigate = useNavigate();
   const { username, email, avatar, _id } = currentUser;
+ 
+
 
   useEffect(() => {
     async function fetchListing() {
@@ -172,8 +174,11 @@ function Profile() {
   };
 
   return (
-    <div className="absolute  top-14 xl:top-12 bottom-0 left-0 right-0  -z-10 flex items-center justify-center">
+    <div className="absolute  top-14 xl:top-12 bottom-0 left-0 right-0  z-10 flex items-center justify-center">
       {/* main-card  */}
+      <div>
+        
+      </div>
       <div className="w-full h-full  flex flex-col xl:flex-row overflow-y-auto">
         {/* profile section */}
         <div className="xl:w-3/12 xl:sticky xl:top-0 px-2 pt-2">

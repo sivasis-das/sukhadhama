@@ -1,0 +1,2 @@
+problems----
+1. solve the height issue and the footer issue, check with bg-color
