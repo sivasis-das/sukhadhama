@@ -1,16 +1,16 @@
 import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
-import React, { useState } from "react";
-import { app } from "../firebase";
-import UploadImageCard from "../components/UploadImageCard";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+    getDownloadURL,
+    getStorage,
+    ref,
+    uploadBytesResumable,
+  } from "firebase/storage";
+  import React, { useEffect, useState } from "react";
+  import { app } from "../firebase";
+  import UploadImageCard from "../components/UploadImageCard";
+  import { useSelector } from "react-redux";
+  import { useNavigate, useParams } from "react-router-dom";
 
-function CreateListings() {
+function UpdateListing() {
   const { currentUser } = useSelector((state) => state.user);
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
@@ -33,7 +33,11 @@ function CreateListings() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
+  const [fetchingError, setFetchingError] = useState(false)
+  const navigate = useNavigate();
+  const {id} = useParams();
+
+  
   const {
     name,
     description,
@@ -49,6 +53,25 @@ function CreateListings() {
     parking,
     furnished,
   } = formData;
+
+  useEffect(()=>{
+    async function fetchListing (){
+        setFetchingError(false)
+        try {
+            const res = await fetch(`/api/listing/get/${id}`)
+        const data = await res.json();
+
+        if(data.success === false){
+            setFetchingError(true)
+        }
+        setFormData(data)
+        } catch (error) {
+            setFetchingError(true)
+        }
+        
+    }
+    fetchListing()
+  },[])
 
   // console.log("files", files);
   // console.log(formData);
@@ -147,7 +170,7 @@ function CreateListings() {
         return setError("Discount price must be lower than regular price");
       setLoading(true);
       setError(false);
-      const res = await fetch("/api/listing/create", {
+      const res = await fetch(`/api/listing/update/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -167,13 +190,13 @@ function CreateListings() {
       setLoading(false);
     }
   };
-
   return (
-    <div className="w-full   bg-gradient-to-b from-orange-600 to-orange-400 py-5">
+    <div className="w-full h-fit  bg-gradient-to-b from-orange-600 to-orange-400 py-5">
       <div className="w-11/12 h-fit m-auto border-2  rounded-xl p-3  shadow-md bg-white   ">
         <h3 className="text-3xl font-bold text-orange-500 ">
-          Create You Listing
+          Update You Listing
         </h3>
+        {fetchingError?<h3 className="text-red-600 font-semibold my-2">Some problem while fetching the data</h3>:null}
         <form
           onSubmit={handleSubmit}
           className="flex flex-col lg:flex-row gap-3"
@@ -192,6 +215,7 @@ function CreateListings() {
                 required
                 maxLength={62}
                 minLength={10}
+                value={name}
                 onChange={handleChange}
                 className="p-2 w-full rounded-md outline-none border-2 focus:border-orange-600
             transition duration-500 ease-in-out text-lg shadow-md"
@@ -211,6 +235,7 @@ function CreateListings() {
                 name="description"
                 placeholder="Description"
                 required
+                value={description}
                 onChange={handleChange}
                 className="p-2 w-full rounded-md outline-none border-2 focus:border-orange-600
             transition duration-500 ease-in-out text-lg shadow-md"
@@ -227,6 +252,7 @@ function CreateListings() {
                 name="address"
                 placeholder="Address"
                 required
+                value={address}
                 onChange={handleChange}
                 className="p-2 w-full rounded-md outline-none border-2 focus:border-orange-600
             transition duration-500 ease-in-out text-lg shadow-md"
@@ -242,6 +268,7 @@ function CreateListings() {
                   name="type"
                   id="sell"
                   value="sell"
+                  checked={type == "sell"}
                   onChange={handleChange}
                   className="peer/sell hidden"
                   required
@@ -257,6 +284,7 @@ function CreateListings() {
                   name="type"
                   id="rent"
                   value="rent"
+                  checked={type == "rent"}
                   onChange={handleChange}
                   className="peer/rent hidden "
                   required
@@ -281,6 +309,7 @@ function CreateListings() {
                   step={1}
                   min={1}
                   max={10}
+                  value={bedrooms}
                   onChange={handleChange}
                   className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600 outline-none border-2 rounded-lg"
                   required
@@ -297,6 +326,7 @@ function CreateListings() {
                   step={1}
                   min={1}
                   max={10}
+                  value={bathrooms}
                   onChange={handleChange}
                   className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out outline-none focus:border-orange-600  border-2 rounded-lg "
                   required
@@ -312,6 +342,7 @@ function CreateListings() {
                     name="parking"
                     id="parkyes"
                     value={true}
+                    checked={parking}
                     onChange={handleChange}
                     className="peer/parkyes hidden"
                     required
@@ -327,6 +358,7 @@ function CreateListings() {
                     name="parking"
                     id="parkno"
                     value={false}
+                    checked={!parking}
                     onChange={handleChange}
                     className="peer/parkno hidden"
                     required
@@ -349,6 +381,7 @@ function CreateListings() {
                     name="furnished"
                     id="furnishedyes"
                     value={true}
+                    checked={furnished}
                     onChange={handleChange}
                     className="peer/furnishedyes hidden"
                     required
@@ -364,6 +397,7 @@ function CreateListings() {
                     name="furnished"
                     id="furnishedno"
                     value={false}
+                    checked={!furnished}
                     onChange={handleChange}
                     className="peer/furnishedno hidden"
                     required
@@ -386,6 +420,7 @@ function CreateListings() {
                   name="latitude"
                   id="latitude"
                   step={0.00000001}
+                  value={latitude}
                   onChange={handleChange}
                   className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none"
                   required
@@ -398,6 +433,7 @@ function CreateListings() {
                   name="longitude"
                   id="longitude"
                   step={0.00000001}
+                  value={longitude}
                   onChange={handleChange}
                   className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none"
                   required
@@ -413,6 +449,7 @@ function CreateListings() {
                   name="offer"
                   id="offeryes"
                   value={true}
+                  checked={offer}
                   onChange={handleChange}
                   className="peer/offeryes hidden"
                   required
@@ -428,6 +465,7 @@ function CreateListings() {
                   name="offer"
                   id="offerno"
                   value={false}
+                  checked={!offer}
                   onChange={handleChange}
                   className="peer/offerno hidden"
                   required
@@ -453,6 +491,7 @@ function CreateListings() {
                     id="regular price"
                     step={1}
                     defaultValue={0}
+                    value={regularPrice}
                     onChange={handleChange}
                     className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none"
                     required
@@ -471,6 +510,7 @@ function CreateListings() {
                       id="discount price"
                       step={1}
                       defaultValue={0}
+                      value={offer==true?discountPrice:0}
                       onChange={handleChange}
                       className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none"
                       required
@@ -496,7 +536,7 @@ function CreateListings() {
                   accept="image/*"
                   multiple
                   className="text-gray-600  text-center shadow-md bg-white p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none file:text-orange-600 file:font-semibold file:border-0 file:bg-slate-100 file:rounded-full file:px-4 file:hover:bg-orange-600 file:hover:text-white file:hover:duration-500 "
-                  required
+                  
                 />
                 <button
                   type="button"
@@ -530,7 +570,7 @@ function CreateListings() {
               type="submit"
               className="bg-orange-600 rounded-lg text-white font-semibold w-full hover:bg-orange-800 active:bg-orange-950 shadow-md transition duration-200 ease-in h-11  flex items-center justify-center gap-3 mt-6"
             >
-              {loading ? "Creating..." : "Create Listing"}
+              {loading ? "Updating..." : "Update Listing"}
             </button>
             {error && (
               <p className="text-sm text-red-600 font-semibold">{error}</p>
@@ -542,4 +582,4 @@ function CreateListings() {
   );
 }
 
-export default CreateListings;
+export default UpdateListing;

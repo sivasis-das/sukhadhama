@@ -19,7 +19,7 @@ import {
   signOutUserSuccess,
   signOutUserFailure,
 } from "../redux/user/userSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import ListingItems from "../components/ListingItems";
 function Profile() {
@@ -35,6 +35,7 @@ function Profile() {
   const [showListingError, setShowListingError] = useState(false);
 
   const fileRef = useRef(null);
+  const navigate = useNavigate();
   const { username, email, avatar, _id } = currentUser;
 
   useEffect(() => {
@@ -166,7 +167,9 @@ function Profile() {
     }
   };
 
-  const handleListingEdit = async (id) => {};
+  const handleListingEdit = async (id) => {
+    navigate(`/update-listing/${id}`)
+  };
 
   return (
     <div className="absolute  top-14 xl:top-12 bottom-0 left-0 right-0  -z-10 flex items-center justify-center">
@@ -214,7 +217,7 @@ function Profile() {
                 </button>
                 <button
                   onClick={handleDeleteUser}
-                  className="xl:hidden bg-red-500    rounded-md p-1 text-sm text-white px-2"
+                  className="xl:hidden bg-orange-600    rounded-md p-1 text-sm text-white px-2"
                 >
                   Delete Account
                 </button>
@@ -324,7 +327,7 @@ function Profile() {
             </button>
             <button
               onClick={handleDeleteUser}
-              className="hidden xl:block bg-red-500    rounded-md p-1 text-sm text-white px-2"
+              className="hidden xl:block bg-orange-600    rounded-md p-1 text-sm text-white px-2"
             >
               Delete Account
             </button>

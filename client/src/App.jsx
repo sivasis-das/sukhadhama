@@ -14,6 +14,7 @@ import SignUp from "./pages/SignUp";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateListings from "./pages/CreateListings";
 import Advertise from "./pages/Advertise";
+import UpdateListing from "./pages/UpdateListing";
 
 function App() {
   const router = createBrowserRouter(
@@ -33,12 +34,21 @@ function App() {
         <Route path="sign-up" element={<SignUp />} />
         <Route path="sign-in" element={<Signin />} />
         <Route path="marketing" element={<Advertise />} />
-        
+
         <Route
           path="create-listing"
           element={
             <PrivateRoute>
               <CreateListings />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="update-listing/:id"
+          element={
+            <PrivateRoute>
+              <UpdateListing />
             </PrivateRoute>
           }
         />
