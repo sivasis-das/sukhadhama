@@ -205,7 +205,7 @@ function Profile() {
                 <h3 className="font-bold text-xl">{currentUser.username}</h3>
                 <button
                   onClick={() => setShowEdit(!showEdit)}
-                  className="bg-slate-100  border border-gray-300  rounded-md p-1 text-sm mr-2"
+                  className=" border-2 border-orange-600 text-orange-600 font-semibold  rounded-md p-1 text-sm mr-2 bg-white hover:bg-orange-600 hover:text-white"
                 >
                   Edit Profile
                 </button>
