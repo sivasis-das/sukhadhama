@@ -42,7 +42,7 @@ function SignUp() {
 
   return (
     <>
-      <div className=" bg-gray-200 w-full min-h-screen  flex items-center justify-center absolute top-0 bottom-0 left-0 right-0 -z-10">
+      <div className=" bg-gray-200 w-full min-h-screen  flex items-center justify-center absolute top-0 bottom-0 left-0 right-0 z-10">
         <div className="w-11/12 xl:w-4/12 bg-white rounded-xl border-black border-2">
           <div className="w-11/12 m-auto">
             <div className="flex items-center justify-between mb-2 py-4">

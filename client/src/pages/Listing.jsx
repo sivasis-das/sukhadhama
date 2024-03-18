@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import { register } from "swiper/element/bundle";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -22,15 +22,18 @@ import { FaBath } from "react-icons/fa";
 import { FaParking } from "react-icons/fa";
 import { MdOutlineChair } from "react-icons/md";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-
+import { useSelector } from "react-redux";
+import Contact from "../components/Contact";
 register();
 
 function Listing() {
   // SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, EffectFade]);
+  const { currentUser } = useSelector((state) => state.user);
   const { id } = useParams();
   const [listing, setListing] = useState(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showContactLandlord, setShowContactLandlord] = useState(false);
 
   useEffect(() => {
     async function fetchListing() {
@@ -90,7 +93,7 @@ function Listing() {
 
             <div className="m-4 flex flex-col md:flex-row max-w-6xl lg:mx-auto p-4 rounded-lg shadow-lg bg-white lg:space-x-5 border-2 ">
               <div className=" w-full">
-                <p className="text-2xl font-bold mb-3 text-blue-900">
+                <p className="text-2xl font-bold mb-3 text-black">
                   {listing.name}- $
                   {listing.offer
                     ? listing.discountPrice
@@ -102,15 +105,17 @@ function Listing() {
                   {listing.type == "rent" && "/month"}
                 </p>
                 <div className="flex items-center gap-2 mb-3">
-                  <FaLocationDot className="text-green-700" />
-                  <p className="font-bold text-lg">{listing.address}</p>
+                  <FaLocationDot className="text-orange-600" />
+                  <p className="font-bold text-lg text-gray-500">
+                    {listing.address}
+                  </p>
                 </div>
                 <div className="mb-3 flex gap-3 ">
-                  <p className="p-1 bg-red-700 rounded-md px-6 w-fit text-white font-semibold">
+                  <p className="p-1 bg-orange-600 rounded-md px-6 w-fit text-white font-semibold">
                     For {listing.type}
                   </p>
                   {listing.offer && (
-                    <p className="w-full max-w-[200px] bg-green-800 rounded-md p-1 text-white text-center font-semibold shadow-md">
+                    <p className="w-full max-w-[200px] bg-orange-600 rounded-md p-1 text-white text-center font-semibold shadow-md">
                       $
                       {Number(listing.regularPrice) -
                         Number(listing.discountPrice)}{" "}
@@ -120,15 +125,17 @@ function Listing() {
                 </div>
 
                 <div className="mb-3">
-                  <p>
-                    <span className="font-semibold">Description</span> -{" "}
-                    {listing.description}
+                  <p className="text-gray-600">
+                    <span className="font-semibold text-gray-800">
+                      Description
+                    </span>{" "}
+                    - {listing.description}
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-4 mb-3">
                   <div>
                     {listing.bedrooms && (
-                      <div className="flex items-center space-x-1">
+                      <div className="flex items-center space-x-1 text-gray-500">
                         <FaBed />
                         <p className="font-bold">
                           {listing.bedrooms > 1
@@ -140,7 +147,7 @@ function Listing() {
                   </div>
                   <div>
                     {listing.bathrooms && (
-                      <div className="flex items-center space-x-1">
+                      <div className="flex items-center space-x-1 text-gray-500">
                         <FaBath />
                         <p className="font-bold">
                           {Number(listing.bathrooms) > 1
@@ -152,7 +159,7 @@ function Listing() {
                   </div>
                   <div>
                     {listing.parking && (
-                      <div className="flex items-center space-x-1">
+                      <div className="flex items-center space-x-1 text-gray-500">
                         <FaParking />
                         <p className="font-bold">Parking Spot</p>
                       </div>
@@ -160,27 +167,35 @@ function Listing() {
                   </div>
                   <div>
                     {listing.furnished && (
-                      <div className="flex items-center space-x-1">
+                      <div className="flex items-center space-x-1 text-gray-500">
                         <MdOutlineChair />
                         <p className="font-bold">Furnished</p>
                       </div>
                     )}
                   </div>
                 </div>
-                {/* {listing.userRef !== auth.currentUser?.uid && (
-                  <div>
-                    {showContactLandlord ? (
-                      <Contact userRef={listing.userRef} listing={listing} />
-                    ) : (
-                      <button
-                        onClick={() => setShowContactLandlord(true)}
-                        className="bg-blue-600 rounded text-white font-semibold w-full hover:bg-blue-800 active:bg-blue-950 shadow-md transition duration-200 ease-in h-11 uppercase"
-                      >
-                        Contact Landlord
-                      </button>
-                    )}
-                  </div>
-                )} */}
+                {currentUser ? (
+                  listing.userRef !== currentUser?._id && (
+                    <div>
+                      {showContactLandlord ? (
+                        <Contact userRef={listing.userRef} listing={listing} />
+                      ) : (
+                        <button
+                          onClick={() => setShowContactLandlord(true)}
+                          className="bg-orange-600 rounded text-white font-semibold w-full hover:bg-orange-800 active:bg-orange-950 shadow-md transition duration-200 ease-in h-11 text-xl"
+                        >
+                          Contact landlord
+                        </button>
+                      )}
+                    </div>
+                  )
+                ) : (
+                  <Link to="/sign-in">
+                    <button className="bg-orange-600 rounded text-white font-semibold w-full hover:bg-orange-800 active:bg-orange-950 shadow-md transition duration-200 ease-in h-11 text-xl">
+                      Register to contact
+                    </button>
+                  </Link>
+                )}
               </div>
               <div className="mt-6 md:mt-0 md:ml-4 w-full h-60 z-10 ">
                 <MapContainer
@@ -213,7 +228,8 @@ function Listing() {
           </>
         )}
         <p className="relative bottom-0 text-orange-600 font-semibold text-center ">
-          Sukha<span className="text-black">Dhama</span> &#169; {new Date().getFullYear()}
+          Sukha<span className=" text-gray-500">Dhama</span> &#169;{" "}
+          {new Date().getFullYear()}
         </p>
       </main>
     </>
