@@ -16,6 +16,7 @@ import CreateListings from "./pages/CreateListings";
 import Advertise from "./pages/Advertise";
 import UpdateListing from "./pages/UpdateListing";
 import Listing from "./pages/Listing";
+import Search from "./pages/Search";
 
 function App() {
   const router = createBrowserRouter(
@@ -36,7 +37,7 @@ function App() {
         <Route path="sign-in" element={<Signin />} />
         <Route path="marketing" element={<Advertise />} />
         <Route path="listing/:id" element={<Listing />} />
-
+        <Route path="search" element={<Search />} />
         <Route
           path="create-listing"
           element={
