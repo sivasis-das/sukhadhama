@@ -38,7 +38,7 @@ function FilterSearch() {
         <div
           className={`absolute top-0 bottom-0 left-0 right-0 bg-white  ${
             showFilter
-              ? "translate-x-0  ease-linear duration-1000":"-translate-y-full ease-linear duration-1000"
+              ? "translate-x-0 transition  ease-linear duration-1000":"-translate-y-full ease-linear duration-1000 transition"
               
           }`}
         >

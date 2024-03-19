@@ -1,6 +1,7 @@
 import React from "react";
 import { FaSearch } from "react-icons/fa";
 function HeroSection({img}) {
+    // done
   return (
     <>
       <div
