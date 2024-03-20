@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-function HeroSection({img}) {
-    // done
+import { useNavigate } from "react-router-dom";
+function HeroSection({ img }) {
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('searchTerm',searchTerm);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+  };
+  
   return (
     <>
+    
       <div
         className="relative w-full overflow-hidden h-[500px]"
         style={{
@@ -19,12 +31,13 @@ function HeroSection({img}) {
             </h1>
           </div>
           <form
-            onSubmit={(e) => e.preventDefault()}
-            onClick={(e) => e.stopPropagation()}
+            onSubmit={handleSubmit}
             className="w-10/12 md:w-1/2  bg-white overflow-hidden rounded-3xl relative p-2"
           >
             <input
               type="text"
+              value={searchTerm}
+              onChange={(e)=>setSearchTerm(e.target.value)}
               placeholder="Address, School, City, Zip or Neighborhood"
               className=" w-full outline-none  pl-3  text-2xl font-light  placeholder:text-wrap"
             />
