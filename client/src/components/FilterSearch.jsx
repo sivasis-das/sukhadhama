@@ -12,7 +12,7 @@ function FilterSearch({ searchData, handleChange, handleSubmit }) {
 
   return (
     <>
-      <div className="sticky top-0">
+      <div className="sticky top-0 shadow-md z-10">
         <div className="flex py-3 mt-2 items-center justify-center  bg-white">
           <div className="flex w-11/12 gap-3">
             <form
@@ -297,7 +297,7 @@ function FilterSearch({ searchData, handleChange, handleSubmit }) {
 
       {/* filter card for mobile*/}
       {showFilter ? (
-        <div className=" fixed top-0 left-0 right-0 bottom-0">
+        <div className=" fixed top-0 left-0 right-0 bottom-0 z-20">
           <div className="">
             <div
               className={`absolute top-0 bottom-0 left-0 right-0 bg-white overflow-auto ${

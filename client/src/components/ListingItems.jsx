@@ -7,10 +7,27 @@ import { formatDistanceToNow } from "date-fns";
 
 function ListingItems({ listing, handleListingDelete, handleListingEdit }) {
   const timePeriod = formatDistanceToNow(listing.createdAt);
+
+  const handleMouseEnter =(e)=>{
+    if (listing.imageUrls.length>1) {
+      e.target.src=listing.imageUrls[1]
+    }else{
+      return
+    }
+    
+  }
+
+  const handleMouseLeave =(e)=>{
+    
+    e.target.src=listing.imageUrls[0]
+  }
+
   return (
     <li className="relative bg-white border flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-2 ">
       <Link className="contents" to={`/listing/${listing._id}`}>
         <img
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
           src={listing.imageUrls[0]}
           alt="house image"
           loading="lazy"

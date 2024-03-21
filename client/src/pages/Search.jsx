@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import FilterSearch from "../components/FilterSearch";
 import { useNavigate } from "react-router-dom";
+import ListingItems from "../components/ListingItems";
+import Loader from "../components/Loader";
 function Search() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -114,6 +116,11 @@ function Search() {
 
   console.log("searchData is:", searchData);
   console.log("listing data :",listings);
+
+  if (loading) {
+    return <Loader/>
+  }
+
   return (
     <div>
       <FilterSearch
@@ -121,7 +128,30 @@ function Search() {
         handleChange={handleChange}
         handleSubmit={handleSubmit}
       />
-      <div className="bg-yellow-100 h-[2000px]">jimy</div>
+      <div className="  pt-10">
+        <div className="md:w-[98%] m-auto  ">
+          {!loading && listings.length === 0 && (
+            <p className="text-3xl text-gray-500 text-center">No listing found!</p>
+          )} 
+          {
+            showListingError?<p className="text-3xl  text-center text-red-600 ">Something went wrong!</p>:null
+          }
+          <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3  2xl:grid-cols-4 mt-6 mb-6">
+              {listings &&
+                listings.length > 0 &&
+                listings.map((listing) => (
+                  <ListingItems
+                    key={listing._id}
+                    listing={listing}
+                    
+                  />
+                ))}
+            </ul>
+        </div>
+      </div>
+      <footer className="text-center">
+        sukhadhama
+      </footer>
     </div>
   );
 }
