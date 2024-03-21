@@ -16,15 +16,18 @@ function FilterSearch({ searchData, handleChange, handleSubmit }) {
         <div className="flex py-3 mt-2 items-center justify-center  bg-white">
           <div className="flex w-11/12 gap-3">
             <form
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={handleSubmit}
               className="xl:hidden  bg-white overflow-hidden rounded-3xl relative p-2 flex-1 border border-black"
             >
               <input
                 type="text"
+                name="searchTerm"
+                value={searchTerm}
+                onChange={handleChange}
                 placeholder="Address, School, City, Zip or Neighborhood"
                 className=" w-full outline-none  pl-3  text-2xl font-light  placeholder:text-wrap"
               />
-              <div  className="bg-black cursor-pointer p-3 rounded-full absolute right-1 top-1 hover:bg-gray-600">
+              <div onClick={handleSubmit}  className="bg-black cursor-pointer p-3 rounded-full absolute right-1 top-1 hover:bg-gray-600">
                 <FaSearch className="text-white" />
               </div>
             </form>
@@ -172,7 +175,7 @@ function FilterSearch({ searchData, handleChange, handleSubmit }) {
                     <select
                       name="sort_order"
                       id="sort_order"
-                      defaultValue={"created_at_desc"}
+                      defaultValue={"createdAt_desc"}
                       onChange={handleChange}
                       className="border border-black rounded-lg p-3  *:font-semibold font-semibold *:rounded-md *:text-gray-600 text-gray-600 "
                     >

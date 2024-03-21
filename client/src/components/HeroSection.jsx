@@ -41,7 +41,7 @@ function HeroSection({ img }) {
               placeholder="Address, School, City, Zip or Neighborhood"
               className=" w-full outline-none  pl-3  text-2xl font-light  placeholder:text-wrap"
             />
-            <div className="bg-gray-400 cursor-pointer p-3 rounded-full absolute right-1 top-1 hover:bg-gray-600">
+            <div onClick={handleSubmit} className="bg-gray-400 cursor-pointer p-3 rounded-full absolute right-1 top-1 hover:bg-gray-600">
               <FaSearch className="text-white" />
             </div>
           </form>
