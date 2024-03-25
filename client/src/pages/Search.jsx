@@ -7,6 +7,9 @@ function Search() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [showListingError, setShowListingError] = useState(false);
+  const [showMoreLoading, setShowMoreLoading] = useState(false);
+  const [showMoreListingError, setShowMoreListingError] = useState(false);
+  const [showMore, setShowMore] = useState(false);
   const [listings, setListings] = useState([]);
   const [searchData, setSearchData] = useState({
     searchTerm: "",
@@ -52,6 +55,7 @@ function Search() {
     }
 
     const fetchListings = async () => {
+      setShowMore(false)
       setShowListingError(false);
       setLoading(true);
       try {
@@ -62,6 +66,11 @@ function Search() {
           setLoading(false);
           setShowListingError(true);
           return;
+        }
+        if (data.length > 8) {
+          setShowMore(true);
+        }else{
+          setShowMore(false);
         }
         setListings(data);
         setLoading(false);
@@ -114,11 +123,38 @@ function Search() {
     navigate(`/search?${searchQuery}`);
   };
 
-  console.log("searchData is:", searchData);
-  console.log("listing data :",listings);
+  // console.log("searchData is:", searchData);
+  // console.log("listing data :", listings);
+
+  const onShowMoreClick = async () => {
+    setShowMoreListingError(false);
+    setShowMoreLoading(true);
+    const numberOfListings = listings.length;
+    const startIndex = numberOfListings;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("startIndex", startIndex);
+    const searchQuery = urlParams.toString();
+    try {
+      const res = await fetch(`/api/listing/get?${searchQuery}`);
+      const data = await res.json();
+      if (data.success === false) {
+        setShowMoreListingError(true);
+        setShowMoreLoading(false);
+        return;
+      }
+      if (data.length < 9) {
+        setShowMore(false);
+      }
+      setListings([...listings, ...data]);
+      setShowMoreLoading(false);
+    } catch (error) {
+      setShowMoreListingError(true);
+      setShowMoreLoading(false);
+    }
+  };
 
   if (loading) {
-    return <Loader/>
+    return <Loader />;
   }
 
   return (
@@ -131,27 +167,40 @@ function Search() {
       <div className="  pt-10">
         <div className="md:w-[98%] m-auto  ">
           {!loading && listings.length === 0 && (
-            <p className="text-3xl text-gray-500 text-center">No listing found!</p>
-          )} 
-          {
-            showListingError?<p className="text-3xl  text-center text-red-600 ">Something went wrong!</p>:null
-          }
+            <p className="text-3xl text-gray-500 text-center">
+              No listing found!
+            </p>
+          )}
+          {showListingError ? (
+            <p className="text-3xl  text-center text-red-600 ">
+              Something went wrong!
+            </p>
+          ) : null}
           <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3  2xl:grid-cols-4 mt-6 mb-6">
-              {listings &&
-                listings.length > 0 &&
-                listings.map((listing) => (
-                  <ListingItems
-                    key={listing._id}
-                    listing={listing}
-                    
-                  />
-                ))}
-            </ul>
+            {listings &&
+              listings.length > 0 &&
+              listings.map((listing) => (
+                <ListingItems key={listing._id} listing={listing} />
+              ))}
+          </ul>
+          {showMore && (
+            <div className="text-center   mb-4">
+              {showMoreListingError ? (
+                <p className="text-red-600 font-semibold text-sm text-center">
+                  Something went wrong
+                </p>
+              ) : null}
+              <button
+                onClick={() => onShowMoreClick()}
+                className="rounded-md p-3 bg-orange-600 text-white text-sm font-semibold border-orange-600 hover:bg-orange-800 active:bg-orange-950  my-2"
+              >
+                {showMoreLoading ? "Loading..." : "Show More"}
+              </button>
+            </div>
+          )}
         </div>
       </div>
-      <footer className="text-center">
-        sukhadhama
-      </footer>
+      <footer className="text-center">sukhadhama</footer>
     </div>
   );
 }
