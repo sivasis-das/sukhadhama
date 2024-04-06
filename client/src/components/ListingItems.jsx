@@ -23,7 +23,7 @@ function ListingItems({ listing, handleListingDelete, handleListingEdit }) {
   }
 
   return (
-    <li className="relative bg-white border flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-2 ">
+    <li className="min-w-72 xl:min-w-0  relative bg-white border flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-2 ">
       <Link className="contents" to={`/listing/${listing._id}`}>
         <img
           onMouseEnter={handleMouseEnter}
@@ -31,7 +31,7 @@ function ListingItems({ listing, handleListingDelete, handleListingEdit }) {
           src={listing.imageUrls[0]}
           alt="house image"
           loading="lazy"
-          className=" resize w-full object-contain hover:scale-105 transition-scale duration-200 ease-in"
+          className="  h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-200 ease-in"
         />
         <p className="absolute top-2 left-2 bg-blue-600 text-white uppercase text-xs font-semibold rounded-md px-2 py-1 shadow-lg">
           {timePeriod} ago{" "}

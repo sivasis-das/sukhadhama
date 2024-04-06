@@ -354,7 +354,7 @@ function Profile() {
             <p className="text-red-600 text-sm font-semibold">
               {showListingError ? "Error showing listing" : null}
             </p>
-            <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mt-6 mb-6">
+            <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mt-6 mb-6 ">
               {userListings &&
                 userListings.length > 0 &&
                 userListings.map((listing) => (
