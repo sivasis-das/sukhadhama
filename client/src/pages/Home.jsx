@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import HeroSection from "../components/HeroSection";
 import { Link } from "react-router-dom";
 import ListingItems from "../components/ListingItems";
+import Footer from "../components/Footer";
 
 function Home() {
   const [offerListings, setOfferListings] = useState([]);
@@ -107,6 +108,9 @@ function Home() {
           )
         }
       </div>
+
+      {/* footer */}
+      <Footer/>
     </div>
   );
 }
