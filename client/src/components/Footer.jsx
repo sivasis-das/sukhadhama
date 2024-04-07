@@ -245,7 +245,7 @@ function Footer() {
           professionals.
         </div>
         <div className="w-[95%] sm:w-[98%] m-auto mt-5 text-xs ">
-          © {new Date().getFullYear()} and All rights reserved. Feedback
+          © {new Date().getFullYear()} <span className="underline">National Association of REALTORS</span> - and <span className="underline">SivasisDas,Inc.</span> All rights reserved.
         </div>
       </div>
     </footer>
