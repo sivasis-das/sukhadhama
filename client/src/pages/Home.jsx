@@ -58,8 +58,8 @@ function Home() {
           offerListings && offerListings.length>0 && (
             <div className="">
               <div>
-                <h2>Recent Offers</h2>
-                <Link to={'/search?offer=true'}>Show more offer</Link>
+                <h2 className="text-2xl font-semibold text-gray-500 ml-3">Recent Offers</h2>
+                <Link to={'/search?offer=true'} className="text-orange-600 font-semibold ml-3">Show more offer</Link>
               </div>
               <div className=" flex flex-col sm:flex-row overflow-x-auto">
                 {
@@ -75,10 +75,10 @@ function Home() {
           rentListings && rentListings.length>0 && (
             <div className="">
               <div>
-                <h2>Recent places for rent</h2>
-                <Link to={'/search?type=rent'}>Show more rents</Link>
+                <h2 className="text-2xl font-semibold text-gray-500 ml-3">Recent places for rent</h2>
+                <Link to={'/search?type=rent'} className="text-orange-600 font-semibold ml-3">Show more rents</Link>
               </div>
-              <div className=" flex flex-col sm:flex-row overflow-x-auto">
+              <div className=" flex flex-col sm:flex-row overflow-x-auto ">
                 {
                   rentListings.map((listing)=>(
                     <ListingItems listing={listing} key={listing._id}/>
@@ -93,8 +93,8 @@ function Home() {
           saleListings && saleListings.length>0 && (
             <div className="">
               <div>
-                <h2>Recent places for sale</h2>
-                <Link to={'/search?type=sell'}>Show more sales</Link>
+                <h2 className="text-2xl font-semibold text-gray-500 ml-3">Recent places for sale</h2>
+                <Link to={'/search?type=sell'} className="text-orange-600 font-semibold ml-3">Show more sales</Link>
               </div>
               <div className=" flex flex-col sm:flex-row overflow-x-auto">
                 {
