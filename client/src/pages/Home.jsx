@@ -4,12 +4,22 @@ import { Link } from "react-router-dom";
 import ListingItems from "../components/ListingItems";
 import Footer from "../components/Footer";
 import Card from "../components/Card";
+import { BiSolidBadgeDollar } from "react-icons/bi";
+import { FaCalculator } from "react-icons/fa";
+import { IoMdCash } from "react-icons/io";
+import { GiHouseKeys } from "react-icons/gi";
+import { BiDirections } from "react-icons/bi";
+import { FaUserCircle } from "react-icons/fa";
+import { AiOutlineStock } from "react-icons/ai";
+import { TbHomeDollar } from "react-icons/tb";
+import { MdOutlineLocalOffer } from "react-icons/md";
 
 function Home() {
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
-
+  const [option, setOption] = useState("buy");
+  // const [isActive, setIsActive] = useState()
   useEffect(() => {
     const fetchOfferListings = async () => {
       try {
@@ -127,34 +137,175 @@ function Home() {
               Discover how we can help
             </h2>
           </div>
-          <div className="flex gap-3 mb-5">
-            <div className="px-4 py-2 rounded-full bg-black">
-              <p className="text-xl text-white">Buying</p>
+          {/* switches */}
+          <div className="flex gap-3 mb-5 pl-3">
+            <div
+              onClick={() => setOption("buy")}
+              className={`px-4 py-2 rounded-full  border border-black hover:bg-gray-200 cursor-pointer ${
+                option == "buy" ? "bg-black hover:bg-gray-800 text-white" : null
+              }`}
+            >
+              <p className="text-xl">Buying</p>
             </div>
-            <div className="px-4 py-2 rounded-full">
-              <p className="text-xl ">Renting</p>
+            <div
+              onClick={() => setOption("rent")}
+              className={`px-4 py-2 rounded-full  border border-black hover:bg-gray-200 cursor-pointer ${
+                option == "rent" ? "bg-black hover:bg-gray-800 text-white" : null
+              }`}
+            >
+              <p className="text-xl">Renting</p>
             </div>
-            <div className="px-4 py-2 rounded-full">
-              <p className="text-xl ">Selling</p>
+            <div
+              onClick={() => setOption("sell")}
+              className={`px-4 py-2 rounded-full  border border-black hover:bg-gray-200 cursor-pointer ${
+                option == "sell" ? "bg-black hover:bg-gray-800 text-white" : null
+              }`}
+            >
+              <p className="text-xl">Selling</p>
             </div>
+            
           </div>
-          <div className="flex flex-col md:flex-row ">
-            <div className="flex-1 ">
-              <div className="p-2 h-full">
-                <Card title={"Find out how much you can afford"} description={"We'll help you estimate your budget range."} link={"Try our affordability calculator"}/>
+          {/* cards main container */}
+          {/* buying cards */}
+          {option == "buy" ? (
+            <div className="flex flex-col lg:flex-row lg:h-[250px] ">
+              <div className="flex-1 ">
+                <div className="p-2 h-full">
+                  <Card
+                    title={"Find out how much you can afford"}
+                    description={"We'll help you estimate your budget range."}
+                    link={"Try our affordability calculator"}
+                    icon={
+                      <BiSolidBadgeDollar
+                        className="text-orange-600"
+                        size={60}
+                      />
+                    }
+                  />
+                </div>
+              </div>
+              <div className="flex-1">
+                <div className="p-2 h-full">
+                  <Card
+                    title={"Understand your monthly costs"}
+                    description={
+                      "Get an in-depth look at your monthly and closing costs"
+                    }
+                    link={"Try our mortgage calculator"}
+                    icon={
+                      <FaCalculator className="text-orange-600" size={60} />
+                    }
+                  />
+                </div>
+              </div>
+              <div className="flex-1">
+                <div className="p-2 h-full">
+                  <Card
+                    title={"Get help with your down payment"}
+                    description={
+                      "You may be able to buy a home with just 3.5% down"
+                    }
+                    link={"Find down payment help"}
+                    icon={<IoMdCash className="text-orange-600" size={60} />}
+                  />
+                </div>
               </div>
             </div>
-            <div className="flex-1">
-              <div className="p-2 h-full">
-                <Card title={"Understand your monthly costs"} description={"Get an in-depth look at your monthly and closing costs"} link={"Try our mortgage calculator"}/>
+          ) : null}
+
+          {/* renting cards */}
+          {option == "rent" ? (
+            <div className="flex flex-col lg:flex-row lg:h-[250px] ">
+              <div className="flex-1 ">
+                <div className="p-2 h-full">
+                  <Card
+                    title={"Rent with the option to buy"}
+                    description={"Lease from Home Partners of America with an option to buy."}
+                    link={"Check program availability"}
+                    icon={
+                      <GiHouseKeys
+                        className="text-orange-600"
+                        size={60}
+                      />
+                    }
+                  />
+                </div>
+              </div>
+              <div className="flex-1">
+                <div className="p-2 h-full">
+                  <Card
+                    title={"Find out if it's better to rent or buy"}
+                    description={
+                      "GDetermine if buying or renting makes more financial sense"
+                    }
+                    link={"Try our rent or buy calculator"}
+                    icon={
+                      <BiDirections className="text-orange-600" size={60} />
+                    }
+                  />
+                </div>
+              </div>
+              <div className="flex-1">
+                <div className="p-2 h-full">
+                  <Card
+                    title={"Save time with a renter profile"}
+                    description={
+                      "Create a free renter profile to share with any landlord"
+                    }
+                    link={"Create a profile"}
+                    icon={<FaUserCircle className="text-orange-600" size={60} />}
+                  />
+                </div>
               </div>
             </div>
-            <div className="flex-1">
-              <div className="p-2 h-full">
-                <Card title={"Get help with your down payment"} description={"You may be able to buy a home with just 3.5% down"} link={"Find down payment help"}/>
+          ) : null}
+
+          {/* selling cards */}
+          {option == "sell" ? (
+            <div className="flex flex-col lg:flex-row lg:h-[250px]">
+              <div className="flex-1 ">
+                <div className="p-2 h-full">
+                  <Card
+                    title={"Buy now, sell later"}
+                    description={"Get help from our partners to buy your new home before selling."}
+                    link={"Search options from our partners"}
+                    icon={
+                      <AiOutlineStock
+                        className="text-orange-600"
+                        size={60}
+                      />
+                    }
+                  />
+                </div>
+              </div>
+              <div className="flex-1">
+                <div className="p-2 h-full">
+                  <Card
+                    title={"Track your home value"}
+                    description={
+                      "See your home's RealEstimate valuation information over time."
+                    }
+                    link={"Get your RealEstimate"}
+                    icon={
+                      <TbHomeDollar className="text-orange-600" size={60} />
+                    }
+                  />
+                </div>
+              </div>
+              <div className="flex-1 ">
+                <div className="p-2 h-full">
+                  <Card
+                    title={"Get offer for your home"}
+                    description={
+                      "Visit Seller's Marketplace to learn how you can sell without listing."
+                    }
+                    link={"Explore my offers"}
+                    icon={<MdOutlineLocalOffer className="text-orange-600" size={60} />}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          ) : null}
         </div>
       </div>
 
