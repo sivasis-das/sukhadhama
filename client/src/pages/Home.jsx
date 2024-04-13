@@ -13,6 +13,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { AiOutlineStock } from "react-icons/ai";
 import { TbHomeDollar } from "react-icons/tb";
 import { MdOutlineLocalOffer } from "react-icons/md";
+import ArticleCards from "../components/ArticleCards";
 
 function Home() {
   const [offerListings, setOfferListings] = useState([]);
@@ -309,6 +310,32 @@ function Home() {
         </div>
       </div>
 
+      {/* Article section */}
+      <div className="my-3 bg-zinc-200 pb-8">
+          <div className="w-full h-[500px] bg-cover bg-center flex items-center justify-center relative " style={{backgroundImage:'url("https://images.unsplash.com/photo-1597682496035-b04f723202a4?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")'}}>
+            <div className="bg-black w-full h-full absolute opacity-45"></div>
+            <div className="md:w-11/12 md:m-auto lg:w-3/4 z-10" >
+              <div className="w-11/12  m-auto ">
+              <div className="text-white mb-5 sm:text-lg lg:text-2xl md:text-center">Unique Homes</div>
+              <div className="text-3xl sm:text-4xl font-extrabold text-white leading-relaxed sm:leading-relaxed mb-6  w-3/4 md:mx-auto md:text-center">A Private Island in Ohio? Yup, and It's the Most Popular Home of the Week</div>
+              <div className="text-white text-lg bg-black w-fit px-5 py-2 rounded-full border-2 border-white md:mx-auto cursor-pointer hover:bg-transparent hover:underline">
+                Read Article
+              </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* article cards section */}
+          <div className="my-4 md:w-11/12 m-auto pb-5 mt-16">
+            <div className="w-11/12 lg:w-[98%] xl:overflow-hidden m-auto overflow-x-scroll pb-5 flex gap-3">
+              <ArticleCards image={"https://plus.unsplash.com/premium_photo-1661777496520-ac732b7ef554?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} tag={'Trends'} headline={"Do Electricity Vehicles Need a Garage? A Reality Check for Eco-nomic viability"}/>
+              <ArticleCards image={"https://images.unsplash.com/photo-1618265851068-c7faacf87e41?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} tag={'Celebrity real estate'} headline={"Sarah Headle, the Former PinkBlue Star Who Ignited the True-Crime Music"}/>
+              <ArticleCards image={"https://images.unsplash.com/photo-1449247613801-ab06418e2861?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} tag={'Trends'} headline={"Mortgage Rates Rise, but Home Sellers Gear Up to Sell Anyway around there home"}/>
+              <ArticleCards image={"https://images.unsplash.com/photo-1565024143906-53ad374920e5?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} tag={'Unique homes'} headline={"Hobbit Paradise: Billy Bagins house for Sale in Hobbiton"}/>
+            </div>
+          </div>
+      </div>
       {/* footer */}
       <Footer />
     </div>

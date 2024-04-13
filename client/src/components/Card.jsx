@@ -6,8 +6,8 @@ function Card({title, description, link,icon}) {
         <div className='flex h-full gap-3'>
             <div className='lg:hidden  text-orange-600'>{icon}</div>
             <div className='flex-1 flex flex-col'>
-                <div className='flex items-end justify-between'>
-                    <p className='font-bold text-lg'>{title}</p>
+                <div className='flex items justify-between'>
+                    <p className='font-bold text-lg w-1/2'>{title}</p>
                     <div className='hidden lg:block'>{icon}</div>
                 </div>
                 
