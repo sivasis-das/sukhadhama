@@ -18,7 +18,7 @@ function Advertise() {
   return (
     <>
       <div>
-        <div className="w-full   sm:w-11/12 m-auto min-h-[600px] ">
+        <div className="w-full   md:w-11/12 m-auto min-h-[600px] ">
           {/* first section */}
           <div className="flex flex-col sm:flex-row  gap-10 sm:gap-3 sm:pt-14 ">
             <div className="pt-5 flex-1">
@@ -58,7 +58,7 @@ function Advertise() {
           </div>
         </div>
         {/* second section */}
-        <div className="py-16 w-full   sm:w-11/12 m-auto">
+        <div className="py-16 w-full   md:w-11/12 m-auto">
           {/* header */}
           <div className="w-11/12 lg:w-[65%] m-auto *:text-center ">
             <h3 className="text-orange-600 text-2xl lg:text-3xl font-bold">
@@ -73,21 +73,17 @@ function Advertise() {
             </h3>
           </div>
 
-          <div className="flex flex-col mt-12 md:flex-row">
+          <div className="w-full flex flex-col mt-12 md:flex-row gap-11 md:gap-0">
             {/* left section */}
-            <div className="md:w-1/2">
+            <div className="">
               <div className="w-11/12 m-auto">
-                <div className="w-11/12 sm:max-w-64 min-w-96 min-h-72 m-auto relative max-w-fit">
+                <div className="w-3/4 m-auto ">
                   <img
-                    className="-translate-y-4 "
+                    className="-translate-y-4"
                     src="https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/home-get-leads-bg.jpg"
                     alt=""
                   />
-                  <img
-                    className="absolute bottom-0 right-0 resize min-w-40 max-w-64"
-                    src="https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/home-get-leads-fg.png"
-                    alt=""
-                  />
+                  
                 </div>
                 <div className="w-3/4 m-auto mt-5 text-center flex flex-col gap-5">
                   <p className="text-3xl lg:text-4xl font-extrabold ">
@@ -98,26 +94,22 @@ function Advertise() {
                     Enjoy a steady stream of serious buyer and seller
                     connections with a single upfront cost.
                   </p>
-                  <div className="bg-orange-600 rounded-full px-14 py-2 text-2xl font-semibold text-white w-fit m-auto">
+                  <div className="bg-orange-600 rounded-full px-14 py-2 text-2xl font-semibold text-white w-fit m-auto ">
                     Learn More
                   </div>
                 </div>
               </div>
             </div>
             {/* right section */}
-            <div >
+            <div className="">
               <div className="w-11/12 m-auto">
-                <div className="w-11/12 sm:max-w-64 min-w-96 min-h-72 m-auto relative max-w-fit">
+                <div className="w-11/12 m-auto">
                   <img
-                    className="-translate-y-4 "
+                    className="-translate-y-4"
                     src="https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/home-pay-when-close-bg.jpg"
                     alt=""
                   />
-                  <img
-                    className="absolute bottom-0 right-0 resize min-w-40 max-w-48"
-                    src="https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/home-pay-when-close-fg.png"
-                    alt=""
-                  />
+                  
                 </div>
                 <div className="w-3/4 m-auto mt-5 text-center flex flex-col gap-5">
                   <p className="text-3xl lg:text-4xl font-extrabold ">
