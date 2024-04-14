@@ -58,7 +58,7 @@ function ImageSlider({ imageUrls }) {
                 <h3 className="font-bold">Anthony Doja</h3>
                 <p>
                   CEO/Brand Founder, <br />
-                  Anthony Doja Luxury Real Estate
+                  Alexa jopnes Luxury Real Estate
                 </p>
               </div>
             </div>
