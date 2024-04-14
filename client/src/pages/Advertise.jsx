@@ -8,12 +8,31 @@ import { FaInstagram } from "react-icons/fa";
 import { FaPinterest } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { SiHomebridge } from "react-icons/si";
+import pic from "../assets/pic1.png";
+import handshake from "../assets/handshake.png";
+import ImageSlider from "../components/ImageSlider";
+// import { register } from "swiper/element/bundle";
+// import { Swiper, SwiperSlide } from "swiper/react";
+// import {
+//   Navigation,
+//   Pagination,
+//   Scrollbar,
+//   A11y,
+//   EffectFade,
+// } from "swiper/modules";
+// import "swiper/css/bundle";
+// import "swiper/css";
+// import "swiper/css/navigation";
+// import "swiper/css/pagination";
+// import "swiper/css/scrollbar";
+
 function Advertise() {
   const { currentUser } = useSelector((state) => state.user);
   console.log(currentUser);
 
   // const currentRoute = window.location.pathname;
   // console.log(currentRoute);
+  const imageUrls = ["https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/testimonials/anthony-djon.jpg", "https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/testimonials/jenny-wemert.jpg","https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/testimonials/stephen-votino.jpg","https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/testimonials/mike-wemert.jpg"];
 
   return (
     <>
@@ -57,8 +76,9 @@ function Advertise() {
             </div>
           </div>
         </div>
+
         {/* second section */}
-        <div className="py-16 w-full   md:w-11/12 m-auto">
+        <div className="py-16  md:w-11/12 m-auto">
           {/* header */}
           <div className="w-11/12 lg:w-[65%] m-auto *:text-center ">
             <h3 className="text-orange-600 text-2xl lg:text-3xl font-bold">
@@ -83,18 +103,17 @@ function Advertise() {
                     src="https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/home-get-leads-bg.jpg"
                     alt=""
                   />
-                  
                 </div>
-                <div className="w-3/4 m-auto mt-5 text-center flex flex-col gap-5">
-                  <p className="text-3xl lg:text-4xl font-extrabold ">
+                <div className="min-w-92  m-auto mt-5 text-center flex flex-col items-center gap-5">
+                  <p className="text-3xl lg:text-4xl font-extrabold max-w-80 min-w-72">
                     Get a predictable
                     <br /> volume of leads
                   </p>
-                  <p className="text-2xl font-light">
+                  <p className="text-2xl font-light max-w-96 min-w-80 h-32">
                     Enjoy a steady stream of serious buyer and seller
                     connections with a single upfront cost.
                   </p>
-                  <div className="bg-orange-600 rounded-full px-14 py-2 text-2xl font-semibold text-white w-fit m-auto ">
+                  <div className="bg-orange-600 rounded-full px-14 py-2 text-2xl font-semibold text-white max-w-80 min-w-72 m-auto ">
                     Learn More
                   </div>
                 </div>
@@ -103,28 +122,82 @@ function Advertise() {
             {/* right section */}
             <div className="">
               <div className="w-11/12 m-auto">
-                <div className="w-11/12 m-auto">
+                <div className="w-3/4 m-auto">
                   <img
                     className="-translate-y-4"
                     src="https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/home-pay-when-close-bg.jpg"
                     alt=""
                   />
-                  
                 </div>
-                <div className="w-3/4 m-auto mt-5 text-center flex flex-col gap-5">
-                  <p className="text-3xl lg:text-4xl font-extrabold ">
-                  Pay only when you close
+                <div className="min-w-92  m-auto mt-5 text-center flex flex-col items-center gap-5">
+                  <p className="text-3xl lg:text-4xl font-extrabold max-w-80 min-w-72">
+                    Pay only when you close
                   </p>
-                  <p className="text-2xl font-light">
-                  Connect live with pre-screened buyers and sellers at no upfront cost.
+                  <p className="text-2xl font-light max-w-80 min-w-80 h-32">
+                    Connect live with pre-screened buyers and sellers at no
+                    upfront cost.
                   </p>
-                  <div className="bg-orange-600 rounded-full px-14 py-2 text-2xl font-semibold text-white w-fit m-auto">
+                  <div className="bg-orange-600 rounded-full px-14 py-2 text-2xl font-semibold text-white max-w-80 min-w-72 m-auto ">
                     Learn More
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+
+        {/* third section */}
+        <div className="py-16  w-11/12 m-auto">
+          <div className="md:w-10/12 m-auto flex gap-5 items-center justify-between flex-col-reverse md:flex-row">
+            <div className="w-11/12 md:w-3/5 flex flex-col gap-6 text-center md:text-left">
+              <h3 className="text-orange-600 text-2xl lg:text-3xl font-bold">
+                Real Estate Marketing
+              </h3>
+              <h3 className="text-5xl lg:text-6xl font-extrabold ">
+                Build your brand
+              </h3>
+              <h3 className="text-2xl font-thin">
+                Real estate marketing solutions to get more eyes on you across
+                the web and by millions of visitors.
+              </h3>
+              <div className="bg-orange-600 rounded-full px-12 py-2 text-2xl font-semibold text-white max-w-80 min-w-72 text-center m-auto md:m-0">
+                <p>Learn More</p>
+              </div>
+            </div>
+            <div>
+              <img className="inline-block" src={pic} alt="" />
+            </div>
+          </div>
+        </div>
+
+        {/* forth section */}
+        <div className="py-16  w-11/12 m-auto">
+          <div className="md:w-10/12 m-auto flex gap-5 items-center justify-between flex-col-reverse md:flex-row-reverse">
+            <div className="w-11/12 md:w-3/5 flex flex-col gap-6 text-center md:text-left">
+              <h3 className="text-orange-600 text-2xl lg:text-3xl font-bold">
+                Lender Solutions
+              </h3>
+              <h3 className="text-5xl lg:text-6xl font-extrabold ">
+                Connect with homebuyers
+              </h3>
+              <h3 className="text-2xl font-thin">
+                Grow your mortgage business by providing connections to
+                motivated homebuyers.
+              </h3>
+              <div className="bg-orange-600 rounded-full px-12 py-2 text-2xl font-semibold text-white max-w-80 min-w-72 text-center m-auto md:m-0">
+                <p>Learn More</p>
+              </div>
+            </div>
+            <div>
+              <img className="inline-block" src={handshake} alt="" />
+            </div>
+          </div>
+        </div>
+
+        {/* fifth section */}
+        {/* image slider */}
+        <div className="py-16 ">
+            <ImageSlider imageUrls={imageUrls}/>
         </div>
       </div>
 

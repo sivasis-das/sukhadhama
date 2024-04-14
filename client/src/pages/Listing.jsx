@@ -3,7 +3,6 @@ import { Link, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import { register } from "swiper/element/bundle";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore from "swiper";
 import {
   Navigation,
   Pagination,
