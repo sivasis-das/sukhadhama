@@ -174,6 +174,7 @@ function Profile() {
   };
 
   return (
+    <>
     <div className="absolute  top-14 xl:top-12 bottom-0 left-0 right-0  z-10 flex items-center justify-center">
       {/* main-card  */}
       <div>
@@ -370,7 +371,10 @@ function Profile() {
           </div>
         </div>
       </div>
+      
     </div>
+    </>
+    
   );
 }
 

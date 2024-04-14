@@ -496,6 +496,7 @@ function Home() {
       </div>
       {/* footer */}
       <Footer />
+      
     </div>
   );
 }

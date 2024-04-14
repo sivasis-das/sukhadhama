@@ -8,6 +8,7 @@ import { FaYoutube } from "react-icons/fa";
 import { BsFillHouseCheckFill } from "react-icons/bs";
 import { FaApple } from "react-icons/fa";
 import { FaGooglePlay } from "react-icons/fa6";
+
 function Footer() {
   return (
     <footer className="bg-black text-white py-10">
@@ -245,7 +246,10 @@ function Footer() {
           professionals.
         </div>
         <div className="w-[95%] sm:w-[98%] m-auto mt-5 text-xs ">
-          © {new Date().getFullYear()} <span className="underline">National Association of REALTORS</span> - and <span className="underline">SivasisDas,Inc.</span> All rights reserved.
+          © {new Date().getFullYear()}{" "}
+          <span className="underline">National Association of REALTORS</span> -
+          and <span className="underline">SivasisDas,Inc.</span> All rights
+          reserved.
         </div>
       </div>
     </footer>
