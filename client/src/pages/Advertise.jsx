@@ -32,7 +32,12 @@ function Advertise() {
 
   // const currentRoute = window.location.pathname;
   // console.log(currentRoute);
-  const imageUrls = ["https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/testimonials/anthony-djon.jpg", "https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/testimonials/jenny-wemert.jpg","https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/testimonials/stephen-votino.jpg","https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/testimonials/mike-wemert.jpg"];
+  const imageUrls = [
+    "https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/testimonials/anthony-djon.jpg",
+    "https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/testimonials/jenny-wemert.jpg",
+    "https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/testimonials/stephen-votino.jpg",
+    "https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/testimonials/mike-wemert.jpg",
+  ];
 
   return (
     <>
@@ -173,7 +178,7 @@ function Advertise() {
         {/* forth section */}
         <div className="py-16  w-11/12 m-auto">
           <div className="md:w-10/12 m-auto flex gap-5 items-center justify-between flex-col-reverse md:flex-row-reverse">
-            <div className="w-11/12 md:w-3/5 flex flex-col gap-6 text-center md:text-left">
+            <div className="w-11/12 md:w-3/5 flex flex-col gap-6 text-center md:text-right">
               <h3 className="text-orange-600 text-2xl lg:text-3xl font-bold">
                 Lender Solutions
               </h3>
@@ -184,7 +189,7 @@ function Advertise() {
                 Grow your mortgage business by providing connections to
                 motivated homebuyers.
               </h3>
-              <div className="bg-orange-600 rounded-full px-12 py-2 text-2xl font-semibold text-white max-w-80 min-w-72 text-center m-auto md:m-0">
+              <div className="bg-orange-600 rounded-full px-12 py-2 text-2xl font-semibold text-white max-w-80 min-w-72 text-center m-auto md:mr-0">
                 <p>Learn More</p>
               </div>
             </div>
@@ -197,7 +202,53 @@ function Advertise() {
         {/* fifth section */}
         {/* image slider */}
         <div className="py-16 ">
-            <ImageSlider imageUrls={imageUrls}/>
+          <ImageSlider imageUrls={imageUrls} />
+        </div>
+
+        {/* sixth section */}
+        <div className="py-16 w-11/12 m-auto">
+                <div className=" m-auto flex flex-col gap-6">
+                    <div className="text-3xl lg:text-4xl lg:text-balance font-extrabold text-center max-w-92">More lead and marketing solutions for:</div>
+                    {/* card container */}
+                    <div className=" lg:w-10/12 m-auto md:flex ">
+                      {/* card */}
+                      <div className="p-4 md:p-0  group hover:bg-orange-600 transition ease-in-out duration-500 md:w-1/3">
+                        <div className="flex gap-4 md:flex-col">
+                          <div className=" md:group-hover:invisible">
+                            <img src="https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/home-builders.png" alt="pictures" />
+                          </div>
+                          <div className="md:text-center">
+                            <h3 className="font-extrabold text-xl group-hover:text-white  lg:text-3xl">Builders</h3>
+                            <h3 className="text-lg font-extralight group-hover:text-white md:invisible md:group-hover:visible md:group-hover:-translate-y-56 md:w-11/12 md:m-auto">Get your homes in front of millions of buyers and control the sales process</h3>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-4 md:p-0 group hover:bg-orange-600 transition ease-in-out duration-500 md:w-1/3">
+                        <div className="flex gap-4  md:flex-col">
+                          <div className="">
+                            <img className="w-full h-full object-contain" src="https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/home-property-managers.png" alt="pictures" />
+                          </div>
+                          <div className="md:text-center">
+                            <h3 className="font-extrabold text-xl group-hover:text-white lg:text-3xl">Property Managers</h3>
+                            <h3 className="text-lg font-extralight group-hover:text-white">Simplify how you find, screen, collect rent, and communicate with your tenants</h3>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-4 md:p-0 group hover:bg-orange-600 transition ease-in-out duration-500 md:w-1/3">
+                        <div className="flex gap-4 md:flex-col">
+                          <div >
+                            <img src="https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/home-brand-advertisers.png" alt="pictures" />
+                          </div>
+                          <div className="md:text-center">
+                            <h3 className="font-extrabold text-xl group-hover:text-white lg:text-3xl">Brand Advertisers</h3>
+                            <h3 className="text-lg font-extralight group-hover:text-white">Reach serious homebuyers and sellers at key life stages</h3>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
         </div>
       </div>
 
