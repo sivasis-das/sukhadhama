@@ -208,11 +208,11 @@ function Advertise() {
         {/* sixth section */}
         <div className="py-16 w-11/12 m-auto">
           <div className=" m-auto flex flex-col gap-6">
-            <div className="text-3xl lg:text-4xl lg:text-balance font-extrabold text-center max-w-92">
+            <div className="text-3xl lg:text-4xl xl:text-5xl lg:text-balance font-extrabold text-center max-w-92">
               More lead and marketing solutions for:
             </div>
             {/* card container */}
-            <div className="w-[400px] md:w-[98%] lg:w-3/4 xl:3/5 m-auto flex flex-col gap-7 md:gap-0 md:flex-row ">
+            <div className=" w-[400px] md:w-[98%] lg:w-3/4 xl:3/5 m-auto flex flex-col gap-7 md:gap-0 md:flex-row ">
               {/* card  1*/}
               <div className="p-4 md:p-0  group hover:bg-orange-600 transition ease-in-out duration-500 md:w-1/3 flex gap-3 md:flex-col relative md:pb-28 ">
                 <div className=" md:group-hover:opacity-0 w-[25%] md:w-3/5 m-auto transition duration-300 ease-in-out">

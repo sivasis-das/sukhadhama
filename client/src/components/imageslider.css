@@ -1,0 +1,8 @@
+.image-slider::-webkit-scrollbar{
+    display: none;
+}
+
+.image-slider{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
