@@ -23,6 +23,7 @@ import { MdOutlineChair } from "react-icons/md";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useSelector } from "react-redux";
 import Contact from "../components/Contact";
+import Footer from "../components/Footer";
 register();
 
 function Listing() {
@@ -226,11 +227,9 @@ function Listing() {
             </div>
           </>
         )}
-        <p className="relative bottom-0 text-orange-600 font-semibold text-center ">
-          Sukha<span className=" text-gray-500">Dhama</span> &#169;{" "}
-          {new Date().getFullYear()}
-        </p>
+        
       </main>
+      <Footer/>
     </>
   );
 }

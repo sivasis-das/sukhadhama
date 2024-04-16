@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { MdModeEdit } from "react-icons/md";
@@ -6,6 +6,7 @@ import { FaTrash } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 
 function ListingItems({ listing, handleListingDelete, handleListingEdit }) {
+  const [pageTitle, setPageTitle] = useState("Profile")
   const timePeriod = formatDistanceToNow(listing.createdAt);
 
   const handleMouseEnter =(e)=>{
@@ -22,8 +23,10 @@ function ListingItems({ listing, handleListingDelete, handleListingEdit }) {
     e.target.src=listing.imageUrls[0]
   }
 
+
+
   return (
-    <li className="min-w-72 xl:min-w-0  relative bg-white border flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-2 ">
+    <li   className="min-w-72 xl:min-w-0 xl:max-w-72  relative bg-white border flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-2">
       <Link className="contents" to={`/listing/${listing._id}`}>
         <img
           onMouseEnter={handleMouseEnter}
@@ -33,6 +36,9 @@ function ListingItems({ listing, handleListingDelete, handleListingEdit }) {
           loading="lazy"
           className="  h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-200 ease-in"
         />
+        
+        
+        
         <p className="absolute top-2 left-2 bg-blue-600 text-white uppercase text-xs font-semibold rounded-md px-2 py-1 shadow-lg">
           {timePeriod} ago{" "}
         </p>

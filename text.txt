@@ -1,4 +1,1 @@
-problems----
-1. solve the height issue and the footer issue, check with bg-color
-http://localhost:5173/listing/65f7beb235183fb42365c95d
-2.check realtor.com for listings ui, make that.
+1. change document title on every page

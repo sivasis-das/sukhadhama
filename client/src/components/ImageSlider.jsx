@@ -40,7 +40,7 @@ function ImageSlider({ imageUrls }) {
 
   return (
     <>
-      <div className="image-slider h-[400px] sm:h-[500px] flex overflow-x-auto scroll-smooth">
+      <div className=" image-slider h-[400px] sm:h-[500px] flex overflow-x-auto scroll-smooth">
         <div ref={firstRef} className="h-full w-fit relative min-w-full md:min-w-fit">
           <img
             className="h-full object-cover"
