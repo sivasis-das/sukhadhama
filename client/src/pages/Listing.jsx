@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
-
-
+import { Helmet } from "react-helmet";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaBed } from "react-icons/fa";
 import { FaBath } from "react-icons/fa";
@@ -13,7 +12,6 @@ import { useSelector } from "react-redux";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import ImageSliderForListing from "../components/ImageSliderForListing";
-
 
 function Listing() {
   const { currentUser } = useSelector((state) => state.user);
@@ -48,6 +46,16 @@ function Listing() {
   }, []);
   return (
     <>
+      <Helmet>
+        <html lang="en" />
+        <title>
+          {listing?.name}
+        </title>
+        <meta
+          name="description"
+          content="Description for Tutorial for React Helmet"
+        />
+      </Helmet>
       <main className=" relative md:w-11/12 md:mx-auto pt-3">
         {loading && <Loader />}
         {error && (
@@ -57,28 +65,27 @@ function Listing() {
         )}
         {listing && !loading && !error && (
           <>
-            <ImageSliderForListing images={listing.imageUrls}/>
+            <ImageSliderForListing images={listing.imageUrls} />
 
             <div className="m-4 flex flex-col md:flex-row  p-4    lg:space-x-5  ">
               <div className=" w-full">
                 <p className="text-2xl font-bold mb-3 text-black">
-                  {listing.name}- <span className="text-3xl">
-                    ${listing.offer
-                    ? listing.discountPrice
-                        ?.toString()
-                        ?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                    : listing.regularPrice
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  {listing.type == "rent" && "/month"}
+                  {listing.name}-{" "}
+                  <span className="text-3xl">
+                    $
+                    {listing.offer
+                      ? listing.discountPrice
+                          ?.toString()
+                          ?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                      : listing.regularPrice
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    {listing.type == "rent" && "/month"}
                   </span>
-                  
                 </p>
                 <div className="flex items-center gap-2 mb-3">
                   <FaLocationDot className="text-orange-600" />
-                  <p className="font-light text-xl ">
-                    {listing.address}
-                  </p>
+                  <p className="font-light text-xl ">{listing.address}</p>
                 </div>
                 <div className="mb-3 flex gap-3 ">
                   <p className="p-1 bg-orange-600 rounded-md px-6 w-fit text-white font-semibold">
@@ -96,10 +103,8 @@ function Listing() {
 
                 <div className="mb-3">
                   <p className="text-xl">
-                    <span className="font-bold ">
-                      Property details
-                    </span>{" "}
-                    :- {listing.description}
+                    <span className="font-bold ">Property details</span> :-{" "}
+                    {listing.description}
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-4 mb-3">
@@ -107,10 +112,13 @@ function Listing() {
                     {listing.bedrooms && (
                       <div className="flex items-center space-x-1 ">
                         <FaBed />
-                        <p className="font-bold">{listing.bedrooms}
-                          {listing.bedrooms > 1
-                            ?  <span className="font-normal"> beds</span>
-                            : <span> bed</span>}
+                        <p className="font-bold">
+                          {listing.bedrooms}
+                          {listing.bedrooms > 1 ? (
+                            <span className="font-normal"> beds</span>
+                          ) : (
+                            <span> bed</span>
+                          )}
                         </p>
                       </div>
                     )}
@@ -119,10 +127,13 @@ function Listing() {
                     {listing.bathrooms && (
                       <div className="flex items-center space-x-1 ">
                         <FaBath />
-                        <p className="font-bold">{listing.bathrooms}
-                          {listing.bathrooms > 1
-                            ?  <span className="font-normal"> baths</span>
-                            : <span> bath</span>}
+                        <p className="font-bold">
+                          {listing.bathrooms}
+                          {listing.bathrooms > 1 ? (
+                            <span className="font-normal"> baths</span>
+                          ) : (
+                            <span> bath</span>
+                          )}
                         </p>
                       </div>
                     )}
@@ -169,7 +180,7 @@ function Listing() {
               </div>
               <div className="mt-6 md:mt-0 md:ml-4 w-full h-60 z-10 rounded-xl">
                 <MapContainer
-                className="rounded-xl"
+                  className="rounded-xl"
                   center={[Number(listing.latitude), Number(listing.longitude)]}
                   zoom={13}
                   scrollWheelZoom={true}
@@ -198,9 +209,8 @@ function Listing() {
             </div>
           </>
         )}
-        
       </main>
-      <Footer/>
+      <Footer />
     </>
   );
 }

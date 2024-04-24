@@ -3,26 +3,20 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 function ImageSliderForListing({ images }) {
   const [imageIndex, setImageIndex] = useState(0);
   const prevImage = () => {
-    if (imageIndex != 0) {
-      if (imageIndex <= images.length - 1) {
-        setImageIndex(imageIndex - 1);
-      }
-    } else if (imageIndex == 0) {
-        setImageIndex(images.length-1)
-    }
+    const isFirstImage = imageIndex === 0;
+    const prevImageIndex = isFirstImage?images.length-1:imageIndex-1;
+    setImageIndex(prevImageIndex);
   };
   const nextImage = () => {
-    if (imageIndex == images.length - 1) {
-      setImageIndex(0);
-    } else {
-      setImageIndex((prev) => prev + 1);
-    }
+    const isLastImage = imageIndex === images.length-1;
+    const nextImageIndex = isLastImage?0:imageIndex+1
+    setImageIndex(nextImageIndex)
   };
 
   return (
-    <div className="md:rounded-xl overflow-hidden  md:w-[98%] md:m-auto">
+    <div className="overflow-hidden md:w-[98%] rounded-xl h-[400px] md:h-[600px] md:m-auto">
       <div
-        className="h-[400px] bg-contain bg-no-repeat bg-center relative lg:w-3/4"
+        className="h-full bg-cover bg-no-repeat bg-center relative"
         style={{ backgroundImage: `url(${images[imageIndex]})` }}
       >
         <div

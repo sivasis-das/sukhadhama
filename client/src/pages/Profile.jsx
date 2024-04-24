@@ -22,6 +22,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import ListingItems from "../components/ListingItems";
+import { Helmet } from "react-helmet";
 function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -175,6 +176,16 @@ function Profile() {
 
   return (
     <>
+    <Helmet>
+        <html lang="en" />
+        <title>
+          {currentUser?.username} - Profile
+        </title>
+        <meta
+          name="description"
+          content="Description for Tutorial for React Helmet"
+        />
+      </Helmet>
     <div className="absolute  top-14 xl:top-12 bottom-0 left-0 right-0  z-10 flex items-center justify-center">
       {/* main-card  */}
       <div>

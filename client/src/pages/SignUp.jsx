@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import { Helmet } from "react-helmet";
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -42,6 +43,16 @@ function SignUp() {
 
   return (
     <>
+    <Helmet>
+        <html lang="en" />
+        <title>
+          SignUp
+        </title>
+        <meta
+          name="description"
+          content="Description for Tutorial for React Helmet"
+        />
+      </Helmet>
       <div className=" bg-gray-200 w-full min-h-screen  flex items-center justify-center absolute top-0 bottom-0 left-0 right-0 z-10">
         <div className="w-11/12 xl:w-4/12 bg-white rounded-xl border-black border-2">
           <div className="w-11/12 m-auto">

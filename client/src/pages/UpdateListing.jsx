@@ -1,14 +1,15 @@
 import {
-    getDownloadURL,
-    getStorage,
-    ref,
-    uploadBytesResumable,
-  } from "firebase/storage";
-  import React, { useEffect, useState } from "react";
-  import { app } from "../firebase";
-  import UploadImageCard from "../components/UploadImageCard";
-  import { useSelector } from "react-redux";
-  import { useNavigate, useParams } from "react-router-dom";
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import React, { useEffect, useState } from "react";
+import { app } from "../firebase";
+import UploadImageCard from "../components/UploadImageCard";
+import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 function UpdateListing() {
   const { currentUser } = useSelector((state) => state.user);
@@ -33,11 +34,10 @@ function UpdateListing() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [fetchingError, setFetchingError] = useState(false)
+  const [fetchingError, setFetchingError] = useState(false);
   const navigate = useNavigate();
-  const {id} = useParams();
+  const { id } = useParams();
 
-  
   const {
     name,
     description,
@@ -54,24 +54,23 @@ function UpdateListing() {
     furnished,
   } = formData;
 
-  useEffect(()=>{
-    async function fetchListing (){
-        setFetchingError(false)
-        try {
-            const res = await fetch(`/api/listing/get/${id}`)
+  useEffect(() => {
+    async function fetchListing() {
+      setFetchingError(false);
+      try {
+        const res = await fetch(`/api/listing/get/${id}`);
         const data = await res.json();
 
-        if(data.success === false){
-            setFetchingError(true)
+        if (data.success === false) {
+          setFetchingError(true);
         }
-        setFormData(data)
-        } catch (error) {
-            setFetchingError(true)
-        }
-        
+        setFormData(data);
+      } catch (error) {
+        setFetchingError(true);
+      }
     }
-    fetchListing()
-  },[])
+    fetchListing();
+  }, []);
 
   // console.log("files", files);
   // console.log(formData);
@@ -191,394 +190,412 @@ function UpdateListing() {
     }
   };
   return (
-    <div className="w-full h-fit  bg-gradient-to-b from-orange-600 to-orange-400 py-5">
-      <div className="w-11/12 h-fit m-auto border-2  rounded-xl p-3  shadow-md bg-white   ">
-        <h3 className="text-3xl font-bold text-orange-500 ">
-          Update You Listing
-        </h3>
-        {fetchingError?<h3 className="text-red-600 font-semibold my-2">Some problem while fetching the data</h3>:null}
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col lg:flex-row gap-3"
-        >
-          {/* info upload */}
-          <div className="*:my-2 flex-1">
-            <div>
-              <label htmlFor="name" className="font-semibold text-gray-600">
-                Name:
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Name"
-                required
-                maxLength={62}
-                minLength={10}
-                value={name}
-                onChange={handleChange}
-                className="p-2 w-full rounded-md outline-none border-2 focus:border-orange-600
-            transition duration-500 ease-in-out text-lg shadow-md"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="description"
-                className="font-semibold text-gray-600"
-              >
-                Description:
-              </label>
-              <input
-                type="text"
-                id="description"
-                name="description"
-                placeholder="Description"
-                required
-                value={description}
-                onChange={handleChange}
-                className="p-2 w-full rounded-md outline-none border-2 focus:border-orange-600
-            transition duration-500 ease-in-out text-lg shadow-md"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="address" className="font-semibold text-gray-600">
-                Address:
-              </label>
-              <input
-                type="text"
-                id="address"
-                name="address"
-                placeholder="Address"
-                required
-                value={address}
-                onChange={handleChange}
-                className="p-2 w-full rounded-md outline-none border-2 focus:border-orange-600
-            transition duration-500 ease-in-out text-lg shadow-md"
-              />
-            </div>
-
-            {/* type of listing */}
-            <div>
-              <h3 className="font-semibold  text-gray-600 ">Sell / Rent:</h3>
-              <div className="flex gap-2 ">
-                <input
-                  type="radio"
-                  name="type"
-                  id="sell"
-                  value="sell"
-                  checked={type == "sell"}
-                  onChange={handleChange}
-                  className="peer/sell hidden"
-                  required
-                />
-                <label
-                  htmlFor="sell"
-                  className="peer-checked/sell:bg-orange-600 peer-checked/sell:text-white flex-1  rounded-md bg-white shadow-md text-center  font-semibold p-2 border-2 text-gray-600 hover:bg-gray-200"
-                >
-                  Sell
+    <>
+    <Helmet>
+        <html lang="en" />
+        <title>
+          Update your listing
+        </title>
+        <meta
+          name="description"
+          content="Description for Tutorial for React Helmet"
+        />
+      </Helmet>
+      <div className="w-full h-fit  bg-gradient-to-b from-orange-600 to-orange-400 py-5">
+        <div className="w-11/12 h-fit m-auto border-2  rounded-xl p-3  shadow-md bg-white   ">
+          <h3 className="text-3xl font-bold text-orange-500 ">
+            Update You Listing
+          </h3>
+          {fetchingError ? (
+            <h3 className="text-red-600 font-semibold my-2">
+              Some problem while fetching the data
+            </h3>
+          ) : null}
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col lg:flex-row gap-3"
+          >
+            {/* info upload */}
+            <div className="*:my-2 flex-1">
+              <div>
+                <label htmlFor="name" className="font-semibold text-gray-600">
+                  Name:
                 </label>
                 <input
-                  type="radio"
-                  name="type"
-                  id="rent"
-                  value="rent"
-                  checked={type == "rent"}
-                  onChange={handleChange}
-                  className="peer/rent hidden "
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Name"
                   required
+                  maxLength={62}
+                  minLength={10}
+                  value={name}
+                  onChange={handleChange}
+                  className="p-2 w-full rounded-md outline-none border-2 focus:border-orange-600
+            transition duration-500 ease-in-out text-lg shadow-md"
                 />
+              </div>
+
+              <div>
                 <label
-                  htmlFor="rent"
-                  className="peer-checked/rent:bg-orange-600 peer-checked/rent:text-white flex-1 rounded-md bg-white shadow-md text-center  font-semibold p-2 border-2 text-gray-600 hover:bg-gray-200"
+                  htmlFor="description"
+                  className="font-semibold text-gray-600"
                 >
-                  Rent
+                  Description:
                 </label>
-              </div>
-            </div>
-
-            {/* beds */}
-            <div className="flex gap-3 ">
-              <div className="w-20">
-                <h3 className="font-semibold text-gray-600 ">Beds:</h3>
                 <input
-                  type="number"
-                  name="bedrooms"
-                  id="bedrooms"
-                  step={1}
-                  min={1}
-                  max={10}
-                  value={bedrooms}
-                  onChange={handleChange}
-                  className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600 outline-none border-2 rounded-lg"
+                  type="text"
+                  id="description"
+                  name="description"
+                  placeholder="Description"
                   required
+                  value={description}
+                  onChange={handleChange}
+                  className="p-2 w-full rounded-md outline-none border-2 focus:border-orange-600
+            transition duration-500 ease-in-out text-lg shadow-md"
                 />
               </div>
 
-              {/* bath */}
-              <div className="w-20">
-                <h3 className="font-semibold text-gray-600 ">Baths:</h3>
+              <div>
+                <label
+                  htmlFor="address"
+                  className="font-semibold text-gray-600"
+                >
+                  Address:
+                </label>
                 <input
-                  type="number"
-                  name="bathrooms"
-                  id="bathrooms"
-                  step={1}
-                  min={1}
-                  max={10}
-                  value={bathrooms}
-                  onChange={handleChange}
-                  className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out outline-none focus:border-orange-600  border-2 rounded-lg "
+                  type="text"
+                  id="address"
+                  name="address"
+                  placeholder="Address"
                   required
+                  value={address}
+                  onChange={handleChange}
+                  className="p-2 w-full rounded-md outline-none border-2 focus:border-orange-600
+            transition duration-500 ease-in-out text-lg shadow-md"
                 />
               </div>
 
-              {/* Parking */}
-              <div className="flex-1">
-                <h3 className="font-semibold text-gray-600 ">Parking:</h3>
-                <div className="flex ">
+              {/* type of listing */}
+              <div>
+                <h3 className="font-semibold  text-gray-600 ">Sell / Rent:</h3>
+                <div className="flex gap-2 ">
                   <input
                     type="radio"
-                    name="parking"
-                    id="parkyes"
-                    value={true}
-                    checked={parking}
+                    name="type"
+                    id="sell"
+                    value="sell"
+                    checked={type == "sell"}
                     onChange={handleChange}
-                    className="peer/parkyes hidden"
+                    className="peer/sell hidden"
                     required
                   />
                   <label
-                    htmlFor="parkyes"
-                    className="peer-checked/parkyes:bg-orange-600 peer-checked/parkyes:text-white flex-1  rounded bg-white shadow-md text-center  font-semibold p-2 border text-gray-600 hover:bg-gray-200"
+                    htmlFor="sell"
+                    className="peer-checked/sell:bg-orange-600 peer-checked/sell:text-white flex-1  rounded-md bg-white shadow-md text-center  font-semibold p-2 border-2 text-gray-600 hover:bg-gray-200"
                   >
-                    Yes
+                    Sell
                   </label>
                   <input
                     type="radio"
-                    name="parking"
-                    id="parkno"
-                    value={false}
-                    checked={!parking}
+                    name="type"
+                    id="rent"
+                    value="rent"
+                    checked={type == "rent"}
                     onChange={handleChange}
-                    className="peer/parkno hidden"
+                    className="peer/rent hidden "
                     required
                   />
                   <label
-                    htmlFor="parkno"
-                    className="peer-checked/parkno:bg-orange-600 peer-checked/parkno:text-white flex-1 rounded bg-white shadow-md text-center  font-semibold p-2 border text-gray-600 hover:bg-gray-200"
+                    htmlFor="rent"
+                    className="peer-checked/rent:bg-orange-600 peer-checked/rent:text-white flex-1 rounded-md bg-white shadow-md text-center  font-semibold p-2 border-2 text-gray-600 hover:bg-gray-200"
                   >
-                    No
+                    Rent
                   </label>
                 </div>
               </div>
 
-              {/* furnished */}
-              <div className="flex-1">
-                <h3 className="font-semibold text-gray-600 ">Furnished:</h3>
-                <div className="flex">
-                  <input
-                    type="radio"
-                    name="furnished"
-                    id="furnishedyes"
-                    value={true}
-                    checked={furnished}
-                    onChange={handleChange}
-                    className="peer/furnishedyes hidden"
-                    required
-                  />
-                  <label
-                    htmlFor="furnishedyes"
-                    className="peer-checked/furnishedyes:bg-orange-600 peer-checked/furnishedyes:text-white flex-1  rounded bg-white shadow-md text-center  font-semibold p-2 border text-gray-600 hover:bg-gray-200"
-                  >
-                    Yes
-                  </label>
-                  <input
-                    type="radio"
-                    name="furnished"
-                    id="furnishedno"
-                    value={false}
-                    checked={!furnished}
-                    onChange={handleChange}
-                    className="peer/furnishedno hidden"
-                    required
-                  />
-                  <label
-                    htmlFor="furnishedno"
-                    className="peer-checked/furnishedno:bg-orange-600 peer-checked/furnishedno:text-white flex-1 rounded bg-white shadow-md text-center  font-semibold p-2 border text-gray-600 hover:bg-gray-200"
-                  >
-                    No
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-5">
-              <div className="flex-1">
-                <h3 className="font-semibold  text-gray-600">Latitude:</h3>
-                <input
-                  type="number"
-                  name="latitude"
-                  id="latitude"
-                  step={0.00000001}
-                  value={latitude}
-                  onChange={handleChange}
-                  className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none"
-                  required
-                />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-semibold  text-gray-600">Longitude:</h3>
-                <input
-                  type="number"
-                  name="longitude"
-                  id="longitude"
-                  step={0.00000001}
-                  value={longitude}
-                  onChange={handleChange}
-                  className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none"
-                  required
-                />
-              </div>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-gray-600">Offer:</h3>
-              <div className="flex gap-2 ">
-                <input
-                  type="radio"
-                  name="offer"
-                  id="offeryes"
-                  value={true}
-                  checked={offer}
-                  onChange={handleChange}
-                  className="peer/offeryes hidden"
-                  required
-                />
-                <label
-                  htmlFor="offeryes"
-                  className="peer-checked/offeryes:bg-orange-600 peer-checked/offeryes:text-white flex-1  rounded-md bg-white shadow-md text-center font-semibold p-2 border-2 text-gray-600 hover:bg-gray-200"
-                >
-                  Yes
-                </label>
-                <input
-                  type="radio"
-                  name="offer"
-                  id="offerno"
-                  value={false}
-                  checked={!offer}
-                  onChange={handleChange}
-                  className="peer/offerno hidden"
-                  required
-                />
-                <label
-                  htmlFor="offerno"
-                  className="peer-checked/offerno:bg-orange-600 peer-checked/offerno:text-white flex-1 rounded-md bg-white shadow-md text-center font-semibold p-2 border-2 text-gray-600 hover:bg-gray-200"
-                >
-                  No
-                </label>
-              </div>
-            </div>
-
-            <div className="flex gap-4">
-              <div className="flex-1">
-                <h3 className="font-semibold text-gray-600 ">
-                  Regular Price {type == "rent" ? "($/Month)" : "($)"}:
-                </h3>
-                <div>
+              {/* beds */}
+              <div className="flex gap-3 ">
+                <div className="w-20">
+                  <h3 className="font-semibold text-gray-600 ">Beds:</h3>
                   <input
                     type="number"
-                    name="regularPrice"
-                    id="regular price"
+                    name="bedrooms"
+                    id="bedrooms"
                     step={1}
-                    defaultValue={0}
-                    value={regularPrice}
+                    min={1}
+                    max={10}
+                    value={bedrooms}
+                    onChange={handleChange}
+                    className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600 outline-none border-2 rounded-lg"
+                    required
+                  />
+                </div>
+
+                {/* bath */}
+                <div className="w-20">
+                  <h3 className="font-semibold text-gray-600 ">Baths:</h3>
+                  <input
+                    type="number"
+                    name="bathrooms"
+                    id="bathrooms"
+                    step={1}
+                    min={1}
+                    max={10}
+                    value={bathrooms}
+                    onChange={handleChange}
+                    className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out outline-none focus:border-orange-600  border-2 rounded-lg "
+                    required
+                  />
+                </div>
+
+                {/* Parking */}
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-600 ">Parking:</h3>
+                  <div className="flex ">
+                    <input
+                      type="radio"
+                      name="parking"
+                      id="parkyes"
+                      value={true}
+                      checked={parking}
+                      onChange={handleChange}
+                      className="peer/parkyes hidden"
+                      required
+                    />
+                    <label
+                      htmlFor="parkyes"
+                      className="peer-checked/parkyes:bg-orange-600 peer-checked/parkyes:text-white flex-1  rounded bg-white shadow-md text-center  font-semibold p-2 border text-gray-600 hover:bg-gray-200"
+                    >
+                      Yes
+                    </label>
+                    <input
+                      type="radio"
+                      name="parking"
+                      id="parkno"
+                      value={false}
+                      checked={!parking}
+                      onChange={handleChange}
+                      className="peer/parkno hidden"
+                      required
+                    />
+                    <label
+                      htmlFor="parkno"
+                      className="peer-checked/parkno:bg-orange-600 peer-checked/parkno:text-white flex-1 rounded bg-white shadow-md text-center  font-semibold p-2 border text-gray-600 hover:bg-gray-200"
+                    >
+                      No
+                    </label>
+                  </div>
+                </div>
+
+                {/* furnished */}
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-600 ">Furnished:</h3>
+                  <div className="flex">
+                    <input
+                      type="radio"
+                      name="furnished"
+                      id="furnishedyes"
+                      value={true}
+                      checked={furnished}
+                      onChange={handleChange}
+                      className="peer/furnishedyes hidden"
+                      required
+                    />
+                    <label
+                      htmlFor="furnishedyes"
+                      className="peer-checked/furnishedyes:bg-orange-600 peer-checked/furnishedyes:text-white flex-1  rounded bg-white shadow-md text-center  font-semibold p-2 border text-gray-600 hover:bg-gray-200"
+                    >
+                      Yes
+                    </label>
+                    <input
+                      type="radio"
+                      name="furnished"
+                      id="furnishedno"
+                      value={false}
+                      checked={!furnished}
+                      onChange={handleChange}
+                      className="peer/furnishedno hidden"
+                      required
+                    />
+                    <label
+                      htmlFor="furnishedno"
+                      className="peer-checked/furnishedno:bg-orange-600 peer-checked/furnishedno:text-white flex-1 rounded bg-white shadow-md text-center  font-semibold p-2 border text-gray-600 hover:bg-gray-200"
+                    >
+                      No
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-5">
+                <div className="flex-1">
+                  <h3 className="font-semibold  text-gray-600">Latitude:</h3>
+                  <input
+                    type="number"
+                    name="latitude"
+                    id="latitude"
+                    step={0.00000001}
+                    value={latitude}
+                    onChange={handleChange}
+                    className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none"
+                    required
+                  />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold  text-gray-600">Longitude:</h3>
+                  <input
+                    type="number"
+                    name="longitude"
+                    id="longitude"
+                    step={0.00000001}
+                    value={longitude}
                     onChange={handleChange}
                     className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none"
                     required
                   />
                 </div>
               </div>
-              {offer && (
+
+              <div>
+                <h3 className="font-semibold text-gray-600">Offer:</h3>
+                <div className="flex gap-2 ">
+                  <input
+                    type="radio"
+                    name="offer"
+                    id="offeryes"
+                    value={true}
+                    checked={offer}
+                    onChange={handleChange}
+                    className="peer/offeryes hidden"
+                    required
+                  />
+                  <label
+                    htmlFor="offeryes"
+                    className="peer-checked/offeryes:bg-orange-600 peer-checked/offeryes:text-white flex-1  rounded-md bg-white shadow-md text-center font-semibold p-2 border-2 text-gray-600 hover:bg-gray-200"
+                  >
+                    Yes
+                  </label>
+                  <input
+                    type="radio"
+                    name="offer"
+                    id="offerno"
+                    value={false}
+                    checked={!offer}
+                    onChange={handleChange}
+                    className="peer/offerno hidden"
+                    required
+                  />
+                  <label
+                    htmlFor="offerno"
+                    className="peer-checked/offerno:bg-orange-600 peer-checked/offerno:text-white flex-1 rounded-md bg-white shadow-md text-center font-semibold p-2 border-2 text-gray-600 hover:bg-gray-200"
+                  >
+                    No
+                  </label>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
                 <div className="flex-1">
                   <h3 className="font-semibold text-gray-600 ">
-                    Discounted Price {type == "rent" ? "($/Month)" : "($)"}:
+                    Regular Price {type == "rent" ? "($/Month)" : "($)"}:
                   </h3>
                   <div>
                     <input
                       type="number"
-                      name="discountPrice"
-                      id="discount price"
+                      name="regularPrice"
+                      id="regular price"
                       step={1}
                       defaultValue={0}
-                      value={offer==true?discountPrice:0}
+                      value={regularPrice}
                       onChange={handleChange}
                       className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none"
                       required
                     />
                   </div>
                 </div>
-              )}
-            </div>
-          </div>
-          {/* photos upload */}
-          <div className="flex-1 *:my-2">
-            <div>
-              <h3 className="font-semibold  text-gray-600">Images:</h3>
-              <p className="text-gray-600">
-                The first image will be the cover (max 6)
-              </p>
-              <div className="flex gap-4">
-                <input
-                  onChange={(e) => setFiles(e.target.files)}
-                  type="file"
-                  name="images"
-                  id="images"
-                  accept="image/*"
-                  multiple
-                  className="text-gray-600  text-center shadow-md bg-white p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none file:text-orange-600 file:font-semibold file:border-0 file:bg-slate-100 file:rounded-full file:px-4 file:hover:bg-orange-600 file:hover:text-white file:hover:duration-500 "
-                  
-                />
-                <button
-                  type="button"
-                  disabled={uploading}
-                  onClick={handleImageSubmit}
-                  className="px-3 rounded-lg border-2 border-orange-600 text-orange-600 font-semibold hover:text-white hover:bg-orange-600 duration-300 ease-in-out shadow-md"
-                >
-                  {uploading ? "Uploading..." : "Upload"}
-                </button>
+                {offer && (
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-600 ">
+                      Discounted Price {type == "rent" ? "($/Month)" : "($)"}:
+                    </h3>
+                    <div>
+                      <input
+                        type="number"
+                        name="discountPrice"
+                        id="discount price"
+                        step={1}
+                        defaultValue={0}
+                        value={offer == true ? discountPrice : 0}
+                        onChange={handleChange}
+                        className="text-center shadow-md p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none"
+                        required
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
-
-            <p className="text-red-600 text-sm font-semibold">
-              {imageUploadError && imageUploadError}
-            </p>
-
-            <div>
-              {formData.imageUrls &&
-                formData.imageUrls.map((url, index) => (
-                  <UploadImageCard
-                    key={url}
-                    data={url}
-                    id={index}
-                    handleImageDelete={handleImageDelete}
+            {/* photos upload */}
+            <div className="flex-1 *:my-2">
+              <div>
+                <h3 className="font-semibold  text-gray-600">Images:</h3>
+                <p className="text-gray-600">
+                  The first image will be the cover (max 6)
+                </p>
+                <div className="flex gap-4">
+                  <input
+                    onChange={(e) => setFiles(e.target.files)}
+                    type="file"
+                    name="images"
+                    id="images"
+                    accept="image/*"
+                    multiple
+                    className="text-gray-600  text-center shadow-md bg-white p-2 w-full transition duration-300 ease-in-out focus:border-orange-600  border-2 rounded-lg outline-none file:text-orange-600 file:font-semibold file:border-0 file:bg-slate-100 file:rounded-full file:px-4 file:hover:bg-orange-600 file:hover:text-white file:hover:duration-500 "
                   />
-                ))}
-            </div>
+                  <button
+                    type="button"
+                    disabled={uploading}
+                    onClick={handleImageSubmit}
+                    className="px-3 rounded-lg border-2 border-orange-600 text-orange-600 font-semibold hover:text-white hover:bg-orange-600 duration-300 ease-in-out shadow-md"
+                  >
+                    {uploading ? "Uploading..." : "Upload"}
+                  </button>
+                </div>
+              </div>
 
-            <button
-              disabled={loading || uploading}
-              type="submit"
-              className="bg-orange-600 rounded-lg text-white font-semibold w-full hover:bg-orange-800 active:bg-orange-950 shadow-md transition duration-200 ease-in h-11  flex items-center justify-center gap-3 mt-6"
-            >
-              {loading ? "Updating..." : "Update Listing"}
-            </button>
-            {error && (
-              <p className="text-sm text-red-600 font-semibold">{error}</p>
-            )}
-          </div>
-        </form>
+              <p className="text-red-600 text-sm font-semibold">
+                {imageUploadError && imageUploadError}
+              </p>
+
+              <div>
+                {formData.imageUrls &&
+                  formData.imageUrls.map((url, index) => (
+                    <UploadImageCard
+                      key={url}
+                      data={url}
+                      id={index}
+                      handleImageDelete={handleImageDelete}
+                    />
+                  ))}
+              </div>
+
+              <button
+                disabled={loading || uploading}
+                type="submit"
+                className="bg-orange-600 rounded-lg text-white font-semibold w-full hover:bg-orange-800 active:bg-orange-950 shadow-md transition duration-200 ease-in h-11  flex items-center justify-center gap-3 mt-6"
+              >
+                {loading ? "Updating..." : "Update Listing"}
+              </button>
+              {error && (
+                <p className="text-sm text-red-600 font-semibold">{error}</p>
+              )}
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

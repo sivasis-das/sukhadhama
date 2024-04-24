@@ -26,7 +26,7 @@ function ListingItems({ listing, handleListingDelete, handleListingEdit }) {
 
 
   return (
-    <li   className="min-w-72 xl:min-w-0 xl:max-w-72  relative bg-white border flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-2">
+    <li   className=" xl:min-w-0   relative bg-white border flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-2">
       <Link className="contents" to={`/listing/${listing._id}`}>
         <img
           onMouseEnter={handleMouseEnter}

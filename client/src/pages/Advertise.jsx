@@ -11,6 +11,7 @@ import { SiHomebridge } from "react-icons/si";
 import pic from "../assets/pic1.png";
 import handshake from "../assets/handshake.png";
 import ImageSlider from "../components/ImageSlider";
+import { Helmet } from "react-helmet";
 // import { register } from "swiper/element/bundle";
 // import { Swiper, SwiperSlide } from "swiper/react";
 // import {
@@ -41,6 +42,14 @@ function Advertise() {
 
   return (
     <>
+      <Helmet>
+        <html lang="en" />
+        <title>List your Property</title>
+        <meta
+          name="description"
+          content="Description for Tutorial for React Helmet"
+        />
+      </Helmet>
       <div>
         <div className="w-full   md:w-11/12 m-auto min-h-[600px] ">
           {/* first section */}
@@ -216,11 +225,11 @@ function Advertise() {
               {/* card  1*/}
               <div className="p-4 md:p-0  group hover:bg-orange-600 transition ease-in-out duration-500 md:w-1/3 flex gap-3 md:flex-col relative md:pb-28 ">
                 <div className=" md:group-hover:opacity-0 w-[25%] md:w-3/5 m-auto transition duration-300 ease-in-out">
-                  <img className=""
+                  <img
+                    className=""
                     src="https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/home-builders.png"
                     alt="pictures"
                   />
-                  
                 </div>
                 <div className="md:text-center max-w-64 flex flex-col md:flex-col-reverse md:items-center md:m-auto">
                   <h3 className="font-extrabold text-xl group-hover:text-white  lg:text-3xl  md:absolute md:left-0 md:right-0 bottom-8 md: w-full">
@@ -234,24 +243,22 @@ function Advertise() {
               </div>
               {/* card  2*/}
               <div className="p-4 md:p-0 group hover:bg-orange-600 transition ease-in-out duration-500 md:w-1/3 flex gap-3 md:flex-col relative md:pb-28">
-                
-                  <div className=" md:group-hover:opacity-0 w-[25%] md:w-3/5 m-auto transition duration-300 ease-in-out">
-                    <img
-                      className=""
-                      src="https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/home-property-managers.png"
-                      alt="pictures"
-                    />
-                  </div>
-                  <div className="md:text-center max-w-64 flex flex-col md:flex-col-reverse md:items-center md:m-auto">
-                    <h3 className="font-extrabold text-xl group-hover:text-white lg:text-3xl md:absolute md:left-0 md:right-0 bottom-8 w-full ">
-                      Property Managers
-                    </h3>
-                    <h3 className="text-lg  font-extralight group-hover:text-white md:invisible md:group-hover:visible  md:w-11/12  md:absolute xl:top-20">
-                      Simplify how you find, screen, collect rent, and
-                      communicate with your tenants
-                    </h3>
-                  </div>
-                
+                <div className=" md:group-hover:opacity-0 w-[25%] md:w-3/5 m-auto transition duration-300 ease-in-out">
+                  <img
+                    className=""
+                    src="https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/home-property-managers.png"
+                    alt="pictures"
+                  />
+                </div>
+                <div className="md:text-center max-w-64 flex flex-col md:flex-col-reverse md:items-center md:m-auto">
+                  <h3 className="font-extrabold text-xl group-hover:text-white lg:text-3xl md:absolute md:left-0 md:right-0 bottom-8 w-full ">
+                    Property Managers
+                  </h3>
+                  <h3 className="text-lg  font-extralight group-hover:text-white md:invisible md:group-hover:visible  md:w-11/12  md:absolute xl:top-20">
+                    Simplify how you find, screen, collect rent, and communicate
+                    with your tenants
+                  </h3>
+                </div>
               </div>
 
               {/* card  3*/}
@@ -261,7 +268,6 @@ function Advertise() {
                     src="https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/home-brand-advertisers.png"
                     alt="pictures"
                   />
-                  
                 </div>
                 <div className="md:text-center max-w-64 flex flex-col md:flex-col-reverse md:items-center md:m-auto ">
                   <h3 className="font-extrabold text-xl group-hover:text-white  lg:text-3xl  md:absolute md:left-0 md:right-0 bottom-8 w-full">
