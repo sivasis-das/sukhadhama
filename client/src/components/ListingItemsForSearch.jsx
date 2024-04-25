@@ -5,28 +5,24 @@ import { MdModeEdit } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 
-function ListingItems({ listing, handleListingDelete, handleListingEdit }) {
-  
+function ListingItemsForSearch({ listing, handleListingDelete, handleListingEdit }) {
+ 
   const timePeriod = formatDistanceToNow(listing.createdAt);
 
-  const handleMouseEnter =(e)=>{
-    if (listing.imageUrls.length>1) {
-      e.target.src=listing.imageUrls[1]
-    }else{
-      return
+  const handleMouseEnter = (e) => {
+    if (listing.imageUrls.length > 1) {
+      e.target.src = listing.imageUrls[1];
+    } else {
+      return;
     }
-    
-  }
+  };
 
-  const handleMouseLeave =(e)=>{
-    
-    e.target.src=listing.imageUrls[0]
-  }
-
-
+  const handleMouseLeave = (e) => {
+    e.target.src = listing.imageUrls[0];
+  };
 
   return (
-    <li   className="min-w-72 md:max-w-72  xl:min-w-0   relative bg-white border flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-2">
+    <li className=" xl:min-w-0   relative bg-white border flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-2">
       <Link className="contents" to={`/listing/${listing._id}`}>
         <img
           onMouseEnter={handleMouseEnter}
@@ -36,9 +32,7 @@ function ListingItems({ listing, handleListingDelete, handleListingEdit }) {
           loading="lazy"
           className="  h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-200 ease-in"
         />
-        
-        
-        
+
         <p className="absolute top-2 left-2 bg-blue-600 text-white uppercase text-xs font-semibold rounded-md px-2 py-1 shadow-lg">
           {timePeriod} ago{" "}
         </p>
@@ -64,7 +58,9 @@ function ListingItems({ listing, handleListingDelete, handleListingEdit }) {
           <div className="flex items-center mt-[10px] space-x-3">
             <div className="flex items-center space-x-1">
               <p className="font-bold text-xs">
-                {listing.bedrooms > 1 ? `${listing.bedrooms} Bedrooms` : "1 Bedroom"}
+                {listing.bedrooms > 1
+                  ? `${listing.bedrooms} Bedrooms`
+                  : "1 Bedroom"}
               </p>
             </div>
             <div className="flex items-center space-x-1">
@@ -94,4 +90,4 @@ function ListingItems({ listing, handleListingDelete, handleListingEdit }) {
   );
 }
 
-export default ListingItems;
+export default ListingItemsForSearch;

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import FilterSearch from "../components/FilterSearch";
 import { useNavigate } from "react-router-dom";
-import ListingItems from "../components/ListingItems";
 import Loader from "../components/Loader";
 import Footer from "../components/Footer";
+import ListingItemsForSearch from "../components/ListingItemsForSearch";
 function Search() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -181,7 +181,7 @@ function Search() {
             {listings &&
               listings.length > 0 &&
               listings.map((listing) => (
-                <ListingItems key={listing._id} listing={listing} />
+                <ListingItemsForSearch key={listing._id} listing={listing} />
               ))}
           </ul>
           {showMore && (

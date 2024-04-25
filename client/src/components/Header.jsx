@@ -48,19 +48,19 @@ function Header() {
             </li>
             <hr />
             <li>
-              <Link to="/buy" className="inline-block w-full">Buy</Link>
+              <Link to={{ pathname: "/search", search: "?type=sell" }} className="inline-block w-full">Buy</Link>
             </li>
             <hr />
             <li>
-              <Link to="/sell" className="inline-block w-full">Sell</Link>
+              <Link to="/marketing" className="inline-block w-full">Sell</Link>
             </li>
             <hr />
             <li>
-              <Link to="/rent" className="inline-block w-full">Rent</Link>
+              <Link to={{ pathname: "/search", search: "?type=rent" }} className="inline-block w-full">Rent</Link>
             </li>
             <hr />
             <li>
-              <Link to="/findrealtor" className="inline-block w-full">Find Realtor&#174;</Link>
+              <Link to="/findrealtors" className="inline-block w-full">Find Realtor&#174;</Link>
             </li>
             <hr />
             <li>
@@ -102,7 +102,7 @@ function Header() {
             </li>
             <li>
               <NavLink
-                to="/buy"
+                to={{ pathname: "/search", search: "?type=sell" }}
                 className={({ isActive }) =>
                   `${
                     isActive && "border-b-2 border-black"
@@ -114,7 +114,7 @@ function Header() {
             </li>
             <li>
               <NavLink
-                to="/sell"
+                to="/marketing"
                 className={({ isActive }) =>
                   `${
                     isActive && "border-b-2 border-black"
@@ -126,7 +126,7 @@ function Header() {
             </li>
             <li>
               <NavLink
-                to="/rent"
+                to={{ pathname: "/search", search: "?type=rent" }}
                 className={({ isActive }) =>
                   `${
                     isActive && "border-b-2 border-black"

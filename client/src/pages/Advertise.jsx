@@ -12,27 +12,13 @@ import pic from "../assets/pic1.png";
 import handshake from "../assets/handshake.png";
 import ImageSlider from "../components/ImageSlider";
 import { Helmet } from "react-helmet";
-// import { register } from "swiper/element/bundle";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import {
-//   Navigation,
-//   Pagination,
-//   Scrollbar,
-//   A11y,
-//   EffectFade,
-// } from "swiper/modules";
-// import "swiper/css/bundle";
-// import "swiper/css";
-// import "swiper/css/navigation";
-// import "swiper/css/pagination";
-// import "swiper/css/scrollbar";
+
 
 function Advertise() {
   const { currentUser } = useSelector((state) => state.user);
   console.log(currentUser);
 
-  // const currentRoute = window.location.pathname;
-  // console.log(currentRoute);
+  
   const imageUrls = [
     "https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/testimonials/anthony-djon.jpg",
     "https://www.realtor.com/marketing/wp-content/themes/rdc-marketing/images/testimonials/jenny-wemert.jpg",

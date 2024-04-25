@@ -268,14 +268,14 @@ function FilterSearch({ searchData, handleChange, handleSubmit }) {
                       Search
                     </button>
 
-                    <button
+                    {/* <button
                       type="reset"
                       className="flex-1 rounded-full border-2 border-black bg-black text-white font-semibold py-2 hover:bg-gray-300 
                       hover:text-black
                       hover:border-gray-300 active:bg-white active:text-black"
                     >
                       Reset
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </form>
@@ -543,12 +543,12 @@ function FilterSearch({ searchData, handleChange, handleSubmit }) {
                       Search
                     </button>
 
-                    <button
+                    {/* <button
                       type="reset"
                       className="flex-1 rounded-full border-2 border-black bg-black text-white font-semibold py-2  active:bg-white active:text-black"
                     >
                       Reset
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </form>

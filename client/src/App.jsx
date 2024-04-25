@@ -17,6 +17,9 @@ import Advertise from "./pages/Advertise";
 import UpdateListing from "./pages/UpdateListing";
 import Listing from "./pages/Listing";
 import Search from "./pages/Search";
+import MyHome from "./pages/MyHome";
+import FindRealtor from "./pages/FindRealtor";
+import News from "./pages/News";
 
 function App() {
   const router = createBrowserRouter(
@@ -38,6 +41,11 @@ function App() {
         <Route path="marketing" element={<Advertise />} />
         <Route path="listing/:id" element={<Listing />} />
         <Route path="search" element={<Search />} />
+        <Route path="myhome" element={<MyHome />} />
+        <Route path="findrealtors" element={<FindRealtor />} />
+        <Route path="news" element={<News />} />
+       
+
         <Route
           path="create-listing"
           element={

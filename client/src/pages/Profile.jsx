@@ -21,8 +21,8 @@ import {
 } from "../redux/user/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
-import ListingItems from "../components/ListingItems";
 import { Helmet } from "react-helmet";
+import ListingItemsForSearch from "../components/ListingItemsForSearch";
 function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -370,7 +370,7 @@ function Profile() {
               {userListings &&
                 userListings.length > 0 &&
                 userListings.map((listing) => (
-                  <ListingItems
+                  <ListingItemsForSearch
                     key={listing._id}
                     listing={listing}
                     handleListingDelete={handleListingDelete}
