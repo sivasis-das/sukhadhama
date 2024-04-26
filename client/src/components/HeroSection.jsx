@@ -7,13 +7,13 @@ function HeroSection({ img }) {
       <div
         className="relative w-full overflow-hidden h-[500px]"
         style={{
-          background: `url(${img}) bottom no-repeat`,
+          background: `url(${img}) center no-repeat`,
           backgroundSize: "cover",
         }}
       >
         <div className="  absolute flex flex-col items-center justify-center left-0 right-0 top-0 bottom-0">
           <div className="mb-14">
-            <h1 className="text-3xl sm:text-4xl md:text-6xl text-white font-bold text-center">
+            <h1 className="text-4xl sm:text-4xl md:text-6xl text-white font-bold text-center">
               The #1 site real estate <br />
               professionals trust*
             </h1>

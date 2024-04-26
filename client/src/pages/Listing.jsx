@@ -48,15 +48,13 @@ function Listing() {
     <>
       <Helmet>
         <html lang="en" />
-        <title>
-          {listing?.name}
-        </title>
+        <title>{listing?.name}</title>
         <meta
           name="description"
           content="Description for Tutorial for React Helmet"
         />
       </Helmet>
-      <main className=" relative md:w-11/12 md:mx-auto pt-3">
+      <main className=" relative md:w-[95%] lg:w-11/12 md:mx-auto pt-3">
         {loading && <Loader />}
         {error && (
           <p className="text-red-600 text-center my-7 text-2xl">
@@ -67,7 +65,7 @@ function Listing() {
           <>
             <ImageSliderForListing images={listing.imageUrls} />
 
-            <div className="m-4 flex flex-col md:flex-row  p-4    lg:space-x-5  ">
+            <div className=" flex flex-col md:flex-row  p-4    lg:space-x-5  ">
               <div className=" w-full">
                 <p className="text-2xl font-bold mb-3 text-black">
                   {listing.name}-{" "}
@@ -101,12 +99,6 @@ function Listing() {
                   )}
                 </div>
 
-                <div className="mb-3">
-                  <p className="text-xl">
-                    <span className="font-bold ">Property details</span> :-{" "}
-                    {listing.description}
-                  </p>
-                </div>
                 <div className="flex flex-wrap gap-4 mb-3">
                   <div>
                     {listing.bedrooms && (
@@ -155,6 +147,14 @@ function Listing() {
                     )}
                   </div>
                 </div>
+
+                <div className="mb-3">
+                  <p className="text-xl">
+                    <span className="font-bold ">Property details</span> :-{" "}
+                    {listing.description}
+                  </p>
+                </div>
+
                 {currentUser ? (
                   listing.userRef !== currentUser?._id && (
                     <div>

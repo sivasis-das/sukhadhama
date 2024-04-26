@@ -17,7 +17,7 @@ function Header() {
         </div>
         {/* container */}
         <div
-          onClick={()=>setShowNav(false)}
+          onClick={() => setShowNav(false)}
           className={`${
             showNav
               ? "absolute z-40 left-0 right-0 top-0 bottom-0 bg-gray-700 bg-opacity-80 ease-in-out duration-500"
@@ -44,35 +44,57 @@ function Header() {
           </div>
           <ul className="*:pl-2 text-xl *:m-4 ">
             <li>
-              <Link to="/" className="inline-block w-full">Home</Link>
+              <Link to="/" className="inline-block w-full">
+                Home
+              </Link>
             </li>
             <hr />
             <li>
-              <Link to={{ pathname: "/search", search: "?type=sell" }} className="inline-block w-full">Buy</Link>
+              <Link
+                to={{ pathname: "/search", search: "?type=sell" }}
+                className="inline-block w-full"
+              >
+                Buy
+              </Link>
             </li>
             <hr />
             <li>
-              <Link to="/marketing" className="inline-block w-full">Sell</Link>
+              <Link to="/marketing" className="inline-block w-full">
+                Sell
+              </Link>
             </li>
             <hr />
             <li>
-              <Link to={{ pathname: "/search", search: "?type=rent" }} className="inline-block w-full">Rent</Link>
+              <Link
+                to={{ pathname: "/search", search: "?type=rent" }}
+                className="inline-block w-full"
+              >
+                Rent
+              </Link>
             </li>
             <hr />
             <li>
-              <Link to="/findrealtors" className="inline-block w-full">Find Realtor&#174;</Link>
+              <Link to="/findrealtors" className="inline-block w-full">
+                Find Realtor&#174;
+              </Link>
             </li>
             <hr />
             <li>
-              <Link to="/myhome" className="inline-block w-full">My Home</Link>
+              <Link to="/myhome" className="inline-block w-full">
+                My Home
+              </Link>
             </li>
             <hr />
             <li>
-              <Link to="/news" className="inline-block w-full">News & Insights</Link>
+              <Link to="/news" className="inline-block w-full">
+                News & Insights
+              </Link>
             </li>
             <hr />
             <li>
-              <Link to="/marketing" className="inline-block w-full">Advertise</Link>
+              <Link to="/marketing" className="inline-block w-full">
+                Advertise
+              </Link>
             </li>
             <hr />
           </ul>
@@ -175,7 +197,9 @@ function Header() {
           </ul>
           <div className="flex items-center text-md font-semibold space-x-3 underline *:cursor-pointer">
             <p>Manage rentals</p>
-            <Link to="/marketing"><p>Advertise</p></Link>
+            <Link to="/marketing">
+              <p>Advertise</p>
+            </Link>
           </div>
         </div>
         {currentUser ? (
